@@ -15,7 +15,7 @@ export default defineNuxtConfig({
 				},
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -28,7 +28,13 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: ['@vueuse/core']
+    }
+  },
+  devServer: {
+    host: '0.0.0.0'
   },
   css: ['~/assets/css/main.css', '~/assets/css/colors.css', '~/assets/css/fonts.css'],
   runtimeConfig: {
@@ -46,9 +52,23 @@ export default defineNuxtConfig({
       display: 'standalone',
       theme_color: '#EA4E1B',
       background_color: '#FFFFFF',
+      icons: [
+        {
+          src: '/images/logo.jpg',
+          sizes: '192x192',
+          type: 'image/jpg',
+          purpose: 'any maskable'
+        },
+        {
+          src: '/images/logo.jpg',
+          sizes: '512x512',
+          type: 'image/jpg',
+          purpose: 'any maskable'
+        }
+      ]
     },
     pwaAssets: {
-      image: '/'
+      image: 'public/images/logo.jpg'
     }
   }
 })

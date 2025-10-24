@@ -1,5 +1,6 @@
 <template>
-    <div class="mobile-container h-screen w-screen">
+    <div class="mobile-container w-full h-full">
+      <safe-area />
       <NuxtPage />
     </div>
   </template>
@@ -10,8 +11,8 @@
     margin: 0 auto;
     position: relative;
     background: var(--color-background);
+
   }
-  
   @media (min-width: 768px) {
     body {
       background: var(--color-text1);

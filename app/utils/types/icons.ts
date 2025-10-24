@@ -35,7 +35,8 @@ export const ICON_NAMES = [
   'pencil-checkmark',
   'scan',
   'hand-withdraw',
-  'star'
+  'star',
+  'close'
 ] as const
 
 export type IconName = typeof ICON_NAMES[number]

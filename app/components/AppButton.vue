@@ -1,5 +1,5 @@
 <template>
-    <button :disabled="disabled" :class="variant">
+    <button :disabled="disabled" :class="variant" @click="onClick">
         <span v-if="!loading">{{ title }}</span>
         <Loader v-else />
     </button>
@@ -7,13 +7,17 @@
 
 <script setup lang="ts">
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     title: string;
-    variant: 'primary' | 'secondary' | 'tertiary' | 'tertiary1';
-    disabled: boolean;
+    variant: 'primary' | 'secondary' | 'tertiary' | 'tertiary1' | 'info';
+    disabled?: boolean;
     loading?: boolean;
-
-}>()
+    onClick?: () => void;
+}>(), {
+    disabled: false,
+    loading: false,
+    onClick: () => {}
+})
 </script>
 <style scoped>
 button{
@@ -46,5 +50,9 @@ button:hover {
 .tertiary1{
     background-color: var(--color-background2);
     color: var(--color-text-black);
+}
+.info{
+    background-color: var(--color-info);
+    color: var(--color-black);
 }
 </style>
