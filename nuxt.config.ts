@@ -13,6 +13,9 @@ export default defineNuxtConfig({
 					name: "viewport",
 					content: "width=device-width, initial-scale=1.0, viewport-fit=cover, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no",
 				},
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -39,6 +42,13 @@ export default defineNuxtConfig({
       name: 'Swiftransact',
       short_name: 'Swiftransact',
       description: 'Swiftransact',
+      orientation: 'portrait',
+      display: 'standalone',
+      theme_color: '#EA4E1B',
+      background_color: '#FFFFFF',
+    },
+    pwaAssets: {
+      image: '/'
     }
   }
 })
