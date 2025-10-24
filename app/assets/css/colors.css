@@ -1,0 +1,84 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Fonts */
+    --font-sans: 'SF Pro Rounded', ui-rounded, 'SF Pro', system-ui, -apple-system, sans-serif;
+    
+    /* Colors */
+    --color-background: #FFFFFF;
+    --color-black: #000000;
+    --color-button: #000;
+    --color-primary: #EA4E1B;
+    --color-button-disabled: #FF9A79;
+    --color-background-input: #F6F6F6;
+  
+    --color-background1: #E6E6E6;
+    --color-background-disabled: #F6F6F6;
+    --color-background3: #0C0C0C;
+    --color-background4: #101720;
+    --color-background5: #F0EFE7;
+    
+    /* Text Colors */
+    --color-subtext: #9CA3AF;
+    --color-text: #1D1D1D;
+    --color-text1: #616161;
+    --color-text2: #A7A7A7;
+    --color-text3: #212121;
+    
+    
+    /* Border Colors */
+    --color-border: #EEE;
+    --color-border1: #D5D5D5;
+    --color-border3: #E8E8E88C;
+    --color-border4: #CCCCCC54;
+    
+    --color-error: #F00;
+    --color-success: #29941B;
+    --color-success-1: #4CB465;
+    --color-green: #7AB8A6;
+    --color-shade1: #FFCBA4;
+    --color-yellow: #FFCB05;
+    
+    --background-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.40) 50.5%, rgba(255, 255, 255, 0.40) 100%);
+    --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset, 0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset, 0 -40px 30px -8px rgba(243, 120, 81, 0.50) inset, 0 -80px 60px -30px rgba(234, 78, 27, 0.60) inset;
+}
+.dark {
+    --color-background: #0F0F0F;
+    --color-black: #000000;
+    --color-primary: #EA4E1B;
+    --color-button: #EA4E1B;
+    --color-button-disabled: #FF9A79;
+    --color-background-input: #333;
+
+    --color-subtext: #9CA3AF;
+  
+    --color-background1: #E6E6E6;
+    --color-background-disabled: #2A2A2A;
+    --color-background3: #0C0C0C;
+    --color-background4: #101720;
+    --color-background5: #F0EFE7;
+    
+    /* Text Colors */
+    --color-text: #FFF;
+    --color-text1: #E0E0E0;
+    --color-text2: #A7A7A7;
+    --color-text3: #212121;
+    
+    
+    /* Border Colors */
+    --color-border: #EEE;
+    --color-border1: #D5D5D5;
+    --color-border3: #E8E8E88C;
+    --color-border4: #CCCCCC54;
+    
+    --color-error: #F00;
+    --color-success: #29941B;
+    --color-success-1: #4CB465;
+    --color-green: #7AB8A6;
+    --color-shade1: #FFCBA4;
+    --color-yellow: #FFCB05;
+    
+    --background-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.40) 50.5%, rgba(255, 255, 255, 0.40) 100%);
+    --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset, 0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset, 0 -40px 30px -8px rgba(243, 120, 81, 0.50) inset, 0 -80px 60px -30px rgba(234, 78, 27, 0.60) inset;
+}
