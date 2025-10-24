@@ -228,6 +228,242 @@ The color variables automatically switch between light and dark values based on 
 
 ## 📦 Application Architecture
 
+### Logging (`app/utils/log.ts`)
+
+**⚠️ IMPORTANT: Never use `console.log` directly in your code!**
+
+The app provides a logging utility that ensures console logs only work in development mode. All logs are automatically suppressed in production builds.
+
+**Usage**:
+
+```typescript
+import log from "~/utils/log";
+
+// Different log levels
+log.info("User logged in", { userId: 123 });
+log.debug("API response:", responseData);
+log.warn("Deprecated function used");
+log.error("Failed to fetch data", error);
+```
+
+**Benefits**:
+
+- 🔒 Automatic suppression in production (no logs leak to production)
+- 🕒 Timestamps on all log messages
+- 📊 Different log levels for better debugging
+- 🎨 Consistent log formatting
+
+**Available Methods**:
+
+- `log.debug()` - Detailed debugging information
+- `log.info()` - General informational messages
+- `log.warn()` - Warning messages for potential issues
+- `log.error()` - Error messages for failures
+
+**Example**:
+
+```typescript
+// ❌ DON'T DO THIS
+console.log("User data:", user);
+
+// ✅ DO THIS INSTEAD
+import log from "~/utils/log";
+log.info("User data:", user);
+```
+
+---
+
+### Reusable Components
+
+The app provides a set of pre-built, styled components for common UI patterns. Always use these instead of creating custom implementations.
+
+#### AppButton (`app/components/AppButton.vue`)
+
+A flexible button component with multiple variants and loading states.
+
+**Props**:
+
+- `title` (string, required) - Button text
+- `variant` ('primary' | 'secondary' | 'tertiary' | 'tertiary1', required) - Button style variant
+- `disabled` (boolean, required) - Disabled state
+- `loading` (boolean, optional) - Shows loader when true
+
+**Usage**:
+
+```vue
+<template>
+  <AppButton
+    title="Sign In"
+    variant="primary"
+    :disabled="false"
+    :loading="isLoading"
+    @click="handleSubmit"
+  />
+</template>
+```
+
+**Variants**:
+
+- `primary` - Main CTA button (primary color, white text)
+- `secondary` - Secondary actions (secondary color, white text)
+- `tertiary` - Tertiary actions (background1 color)
+- `tertiary1` - Alternative tertiary (background2 color)
+
+---
+
+#### AppInput (`app/components/AppInput.vue`)
+
+A versatile input component with icons, validation, and type support.
+
+**Props**:
+
+- `modelValue` (string | number, required) - Input value (v-model)
+- `label` (string, optional) - Input label
+- `placeholder` (string, optional, default: 'Type here') - Placeholder text
+- `type` (string, optional, default: 'text') - Input type ('text', 'password', 'number', etc.)
+- `editable` (boolean, optional, default: true) - Whether input is editable
+- `prependIcon` (IconName, optional) - Icon before input
+- `appendIcon` (IconName, optional) - Icon after input
+- `orientation` ('vertical' | 'horizontal', optional, default: 'vertical') - Layout direction
+- `error` (string, optional) - Error message to display
+
+**Usage**:
+
+```vue
+<script setup>
+const email = ref("");
+const password = ref("");
+const amount = ref(0);
+</script>
+
+<template>
+  <!-- Basic input -->
+  <AppInput
+    v-model="email"
+    label="Email Address"
+    placeholder="Enter your email"
+    type="email"
+  />
+
+  <!-- Password input (auto-shows eye icon) -->
+  <AppInput v-model="password" label="Password" type="password" />
+
+  <!-- Input with icons -->
+  <AppInput
+    v-model="amount"
+    label="Amount"
+    type="number"
+    prepend-icon="token-branded"
+    placeholder="0.00"
+  />
+
+  <!-- Input with error -->
+  <AppInput v-model="email" label="Email" error="Invalid email format" />
+
+  <!-- Horizontal layout -->
+  <AppInput v-model="value" label="Amount" orientation="horizontal" />
+</template>
+```
+
+**Features**:
+
+- Automatic password visibility toggle for `type="password"`
+- Dark mode support
+- Icon support (prepend/append)
+- Error state handling
+- Number type support with validation
+
+---
+
+#### OtpInput (`app/components/OtpInput.vue`)
+
+A specialized input component for OTP (One-Time Password) entry with auto-focus and paste support.
+
+**Props**:
+
+- `modelValue` (string, required) - OTP value (v-model)
+- `length` (number, optional, default: 4) - Number of OTP digits
+- `disabled` (boolean, optional, default: false) - Disabled state
+- `error` (boolean, optional, default: false) - Error state
+- `success` (boolean, optional, default: false) - Success state
+- `secure` (boolean, optional, default: true) - Mask input with dots
+
+**Usage**:
+
+```vue
+<script setup>
+const otp = ref("");
+</script>
+
+<template>
+  <!-- Basic OTP input (4 digits) -->
+  <OtpInput v-model="otp" />
+
+  <!-- 6-digit OTP -->
+  <OtpInput v-model="otp" :length="6" />
+
+  <!-- With error state -->
+  <OtpInput v-model="otp" :error="true" />
+
+  <!-- With success state -->
+  <OtpInput v-model="otp" :success="true" />
+
+  <!-- Show plain numbers (not masked) -->
+  <OtpInput v-model="otp" :secure="false" />
+</template>
+```
+
+**Features**:
+
+- Auto-focus next input on entry
+- Backspace navigation
+- Paste support (auto-fills all inputs)
+- Arrow key navigation
+- Number-only input validation
+- Secure masking with dots
+- Error/success visual states
+- Dark mode support
+
+---
+
+#### Loader (`app/components/Loader.vue`)
+
+A customizable loading spinner component.
+
+**Props**:
+
+- `size` (number, optional, default: 20) - Spinner size in pixels
+- `color` (string, optional, default: '#fff') - Spinner color
+- `thickness` (number, optional, default: 2) - Border thickness in pixels
+- `speed` (string, optional, default: '1s') - Animation speed
+
+**Usage**:
+
+```vue
+<template>
+  <!-- Default loader -->
+  <Loader />
+
+  <!-- Custom size and color -->
+  <Loader :size="40" color="#EA4E1B" />
+
+  <!-- Custom thickness and speed -->
+  <Loader :thickness="3" speed="0.5s" />
+
+  <!-- Large loader -->
+  <Loader :size="60" :thickness="4" color="#7AB8A6" />
+</template>
+```
+
+**Use Cases**:
+
+- Button loading states (used in `AppButton`)
+- Page loading indicators
+- Content loading placeholders
+- API request states
+
+---
+
 ### Composables (`app/composables/`)
 
 Composables are reusable composition functions for managing stateful logic, side effects, and shared functionality across components.
@@ -404,6 +640,51 @@ definePageMeta({
 ---
 
 ## 🎯 Development Guidelines
+
+### Logging
+
+**⚠️ CRITICAL RULE: Never use `console.log` in your code!**
+
+- ✅ **DO**: Use `log.info()`, `log.debug()`, `log.warn()`, `log.error()`
+- ❌ **DON'T**: Use `console.log()`, `console.error()`, etc.
+- Logs automatically suppressed in production
+- All logs include timestamps for better debugging
+
+```typescript
+// ❌ BAD
+console.log("User data:", user);
+
+// ✅ GOOD
+import log from "~/utils/log";
+log.info("User data:", user);
+```
+
+---
+
+### Reusable Components
+
+Always use the provided reusable components instead of building custom ones:
+
+**For Forms**:
+
+- ✅ Use `<AppInput>` for text inputs, passwords, numbers
+- ✅ Use `<AppButton>` for all buttons
+- ✅ Use `<OtpInput>` for OTP/PIN entry
+
+**For UI Elements**:
+
+- ✅ Use `<Loader>` for loading states
+- ✅ Use `<Icon>` for all icons
+- ✅ Use `<IconBox>` for icons with circular backgrounds
+
+**Benefits**:
+
+- Consistent UI across the app
+- Built-in dark mode support
+- Type-safe props with TypeScript
+- Accessible and tested
+
+---
 
 ### Component Naming
 
