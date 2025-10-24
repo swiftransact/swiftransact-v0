@@ -8,23 +8,26 @@
     /* Colors */
     --color-background: #FFFFFF;
     --color-black: #000000;
-    --color-button: #000;
+    --color-secondary-button: #000;
     --color-primary: #EA4E1B;
     --color-button-disabled: #FF9A79;
     --color-background-input: #F6F6F6;
   
-    --color-background1: #E6E6E6;
-    --color-background-disabled: #F6F6F6;
+    --color-background1: #F6F6F6;
+    --color-background2: #E6E6E6;
     --color-background3: #0C0C0C;
     --color-background4: #101720;
     --color-background5: #F0EFE7;
     
     /* Text Colors */
+    --color-input-text: #616161;
     --color-subtext: #9CA3AF;
     --color-text: #1D1D1D;
     --color-text1: #616161;
     --color-text2: #A7A7A7;
     --color-text3: #212121;
+    --color-tertiary-text: #1D1D1D;
+    --color-text-black: #000;
     
     
     /* Border Colors */
@@ -47,19 +50,22 @@
     --color-background: #0F0F0F;
     --color-black: #000000;
     --color-primary: #EA4E1B;
-    --color-button: #EA4E1B;
+    --color-secondary-button: #EA4E1B;
     --color-button-disabled: #FF9A79;
     --color-background-input: #333;
+    --color-tertiary-text: #FFFFFF;
 
     --color-subtext: #9CA3AF;
   
-    --color-background1: #E6E6E6;
-    --color-background-disabled: #2A2A2A;
+    --color-background1: #2A2A2A;
+    --color-background2: #131313;
     --color-background3: #0C0C0C;
     --color-background4: #101720;
     --color-background5: #F0EFE7;
     
     /* Text Colors */
+    --color-input-text: #FFF;
+    --color-text-black: #fff;
     --color-text: #FFF;
     --color-text1: #E0E0E0;
     --color-text2: #A7A7A7;
