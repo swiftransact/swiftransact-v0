@@ -19,8 +19,8 @@
                     <p v-if="modal.subtitle" class="text-text1 text-center text-sm">{{ modal.subtitle }}</p>
                 </div>
                 <div class="flex gap-2 w-full">
-                    <app-button class="flex-1" v-if="modal.secondaryActionTitle" :title="modal.secondaryActionTitle" variant="info" :onClick="modal.secondaryAction" />
-                    <app-button class="flex-1" :title="modal.primaryActionTitle" variant="primary" :onClick="modal.primaryAction" />
+                    <app-button class="flex-1" v-if="modal.secondaryActionTitle" :title="modal.secondaryActionTitle" variant="info" @click="modal.secondaryAction" />
+                    <app-button class="flex-1" :title="modal.primaryActionTitle" variant="primary" @click="modal.primaryAction" />
                 </div>
             </div>
            </template>
@@ -63,7 +63,7 @@ const props = defineProps<SliderProps>()
 
 const slots = useSlots()
 if (import.meta.dev && props.title && !slots.default) {
-    console.warn('BottomSlider: title prop requires slot content to be provided')
+    log.warn('BottomSlider: title prop requires slot content to be provided')
 }
 
 // Lock scroll when modal is open

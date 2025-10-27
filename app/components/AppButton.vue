@@ -1,5 +1,5 @@
 <template>
-    <button :disabled="disabled" :class="variant" @click="onClick">
+    <button :disabled="disabled" :class="variant" :type="type">
         <span v-if="!loading">{{ title }}</span>
         <Loader v-else />
     </button>
@@ -9,14 +9,15 @@
 
 const props = withDefaults(defineProps<{
     title: string;
-    variant: 'primary' | 'secondary' | 'tertiary' | 'tertiary1' | 'info';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'tertiary1' | 'info';
     disabled?: boolean;
     loading?: boolean;
-    onClick?: () => void;
+    type?: 'submit' | 'button';
 }>(), {
     disabled: false,
     loading: false,
-    onClick: () => {}
+    variant: 'primary',
+    type: 'button'
 })
 </script>
 <style scoped>
@@ -27,6 +28,7 @@ button{
     font-size: 18px;
     font-weight: 600;
     width: 100%;
+    text-wrap: nowrap;
 }
 button:disabled{
     opacity: 0.5;

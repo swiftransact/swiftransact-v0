@@ -6,6 +6,7 @@
     --font-sans: 'SF Pro Rounded', ui-rounded, 'SF Pro', system-ui, -apple-system, sans-serif;
     
     /* Colors */
+    --color-grey-bg: #F6F6F6;
     --color-background: #FFFFFF;
     --color-black: #000000;
     --color-secondary-button: #000;
@@ -35,6 +36,7 @@
     --color-border1: #D5D5D5;
     --color-border3: #E8E8E88C;
     --color-border4: #CCCCCC54;
+    --color-divider: #E5E5E5;
     
     --color-error: #F00;
     --color-success: #29941B;
@@ -48,6 +50,7 @@
     --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset, 0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset, 0 -40px 30px -8px rgba(243, 120, 81, 0.50) inset, 0 -80px 60px -30px rgba(234, 78, 27, 0.60) inset;
 }
 .dark {
+    --color-grey-bg: #404040;
     --color-background: #0F0F0F;
     --color-black: #000000;
     --color-primary: #EA4E1B;
@@ -56,7 +59,6 @@
     --color-info: #F9CBAF;
     --color-background-input: #333;
     --color-tertiary-text: #FFFFFF;
-
 
     --color-subtext: #9CA3AF;
   
@@ -80,8 +82,9 @@
     --color-border1: #D5D5D5;
     --color-border3: #E8E8E88C;
     --color-border4: #CCCCCC54;
+    --color-divider: #E0E0E0;
     
-    --color-error: #F00;
+    --color-error:  #B3261E;
     --color-success: #29941B;
     --color-success-1: #4CB465;
     --color-green: #7AB8A6;
@@ -91,3 +94,8 @@
     --background-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.40) 50.5%, rgba(255, 255, 255, 0.40) 100%);
     --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset, 0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset, 0 -40px 30px -8px rgba(243, 120, 81, 0.50) inset, 0 -80px 60px -30px rgba(234, 78, 27, 0.60) inset;
 }
+@layer components {
+    .btn-outlined {
+      @apply px-2.5 py-1 text-sm font-semibold text-text-black rounded-sm border border-background-input;
+    }
+  }

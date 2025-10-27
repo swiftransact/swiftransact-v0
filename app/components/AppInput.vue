@@ -11,6 +11,7 @@
               :value="modelValue"
               :disabled="!editable"
               @input="onInput"
+              @blur="onBlur"
           />
           <icon 
               v-if="appendIconName"
@@ -21,16 +22,17 @@
           />
       </div>
     </div>
-    <p v-if="error" class="text-error text-xs mt-1">{{ error }}</p>
+    <p v-if="(error || validationError) && isTouched" class="text-error text-xs mt-1">{{ error || validationError }}</p>
 </div>
 </template>
 
 <script setup lang="ts">
 import { useDark } from '@vueuse/core';
 import type { IconName } from '~/utils/types/icons';
+import type { Rule } from '~/utils/types/rules';
 
 const isDark = useDark();
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'update:valid']);
 const props = withDefaults(defineProps<{
     label?: string
     placeholder?: string
@@ -41,13 +43,40 @@ const props = withDefaults(defineProps<{
     appendIcon?: IconName
     orientation?: 'vertical' | 'horizontal'
     error?: string
+    rules?: Rule[]
 }>(), {
     placeholder: 'Type here',
     type: 'text',
     editable: true,
     orientation: 'vertical'
 })
+const validationError = ref('');
 const isPasswordVisible = ref(false);
+const isValid = ref(true);
+const isTouched = ref(false);
+
+// Register with parent form if it exists
+const formContext = inject<{
+  registerInput: (id: symbol, isValid: Ref<boolean>) => void
+  unregisterInput: (id: symbol) => void
+} | null>('formContext', null);
+
+const inputId = Symbol('input');
+
+onMounted(() => {
+  // Validate silently to set initial validity
+  validate(props.modelValue);
+  
+  if (formContext) {
+    formContext.registerInput(inputId, isValid);
+  }
+});
+
+onUnmounted(() => {
+  if (formContext) {
+    formContext.unregisterInput(inputId);
+  }
+});
 const appendIconName: ComputedRef<IconName | undefined> = computed(() => {
     if(props.type === 'password'){
         return isPasswordVisible.value ? 'eye-on' : 'eye-off';
@@ -59,15 +88,44 @@ const togglePasswordVisibility = () => {
 }
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement
-  let value = target.value
+  let value: string | number = target.value
+  
+  isTouched.value = true;
   
   if (props.type === 'number' && value !== '') {
     const numValue = Number(value)
-    emit('update:modelValue', isNaN(numValue) ? value : numValue)
-  } else {
-    emit('update:modelValue', value)
+    value = isNaN(numValue) ? value : numValue
   }
+  
+  emit('update:modelValue', value)
+  validate(value);
 }
+const validate = (value: string | number) => {
+    if (!props.rules || props.rules.length === 0) {
+        isValid.value = true;
+        emit('update:valid', true);
+        return true;
+    }
+    
+    validationError.value = ''
+    for (const { rule, message } of props.rules || []) {
+        if (!rule(value)) {
+            validationError.value = message
+            isValid.value = false;
+            emit('update:valid', false);
+            return false
+        }
+    }
+    
+    isValid.value = true;
+    emit('update:valid', true);
+    return true;
+}
+const onBlur = () => {
+  isTouched.value = true;
+  validate(props.modelValue);
+}
+
 </script>
 
 <style scoped>
@@ -100,9 +158,8 @@ input::placeholder{
     align-items: center;
     gap: 10px;
     width: 100%;
-
 }
-.input-wrapper * {
+.input-wrapper.horizontal > .input-container {
     flex: 1;
 }
 </style>

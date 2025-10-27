@@ -3,16 +3,16 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
-  modules: ['@vite-pwa/nuxt'],
+  modules: ['@vite-pwa/nuxt', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', 'vue3-carousel-nuxt', 'vue3-carousel-nuxt'],
   app: {
     head: {
       title: 'Swiftransact',
       meta: [
         { name: 'description', content: 'Swiftransact' },
         {
-					name: "viewport",
-					content: "width=device-width, initial-scale=1.0, viewport-fit=cover, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no",
-				},
+                    name: "viewport",
+                    content: "width=device-width, initial-scale=1.0, viewport-fit=cover, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no",
+                },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
@@ -44,6 +44,9 @@ export default defineNuxtConfig({
   },
   pwa: {
     registerType: 'autoUpdate',
+    client: {
+      installPrompt: true,
+    },
     manifest: {
       name: 'Swiftransact',
       short_name: 'Swiftransact',
@@ -52,23 +55,23 @@ export default defineNuxtConfig({
       display: 'standalone',
       theme_color: '#EA4E1B',
       background_color: '#FFFFFF',
-      icons: [
-        {
-          src: '/images/logo.jpg',
-          sizes: '192x192',
-          type: 'image/jpg',
-          purpose: 'any maskable'
-        },
-        {
-          src: '/images/logo.jpg',
-          sizes: '512x512',
-          type: 'image/jpg',
-          purpose: 'any maskable'
-        }
-      ]
+      // icons: [
+      //   {
+      //     src: '/images/logo.jpg',
+      //     sizes: '192x192',
+      //     type: 'image/jpg',
+      //     purpose: 'any maskable'
+      //   },
+      //   {
+      //     src: '/images/logo.jpg',
+      //     sizes: '512x512',
+      //     type: 'image/jpg',
+      //     purpose: 'any maskable'
+      //   }
+      // ]
     },
     pwaAssets: {
-      image: 'public/images/logo.jpg'
+      image: 'public/favicon.ico'
     }
   }
 })
