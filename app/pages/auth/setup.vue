@@ -21,11 +21,11 @@ const isDark = useDark();
 const router = useRouter();
 
 const signUpWithWallet = () => {
-  router.push('/auth/signup');
+  goTo('/auth/signup');
 }
 
 const signUpWithEmail = () => {
-  router.push('/auth/signup');
+  goTo('/auth/signup');
 }
 </script>
 

@@ -1,3 +1,10 @@
+:root{
+  --right: env(safe-area-inset-right, 0px);
+  --top: env(safe-area-inset-top, 0px);
+  --left: env(safe-area-inset-left, 0px);
+  --bottom: env(safe-area-inset-bottom, 0px);
+}
+
 body::-webkit-scrollbar {
   display: none !important;
 }
@@ -31,10 +38,10 @@ body {
   height: 100%;
   width: 100%;
   min-height: 100dvh;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  padding-top: var(--top);
+  padding-bottom: var(--bottom);
+  padding-left: var(--left);
+  padding-right: var(--right);
 }
 @media (min-width: 768px) {
   body {
@@ -56,15 +63,15 @@ input{
   border: none !important;
 }
 .safe-padding {
-	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+	padding: var(--top) var(--right) var(--bottom) var(--left);
 }
 .bottom{
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: var(--bottom);
 }
 .header-fixed {
-  top: env(safe-area-inset-top);
+  top: var(--top);
 }
 
 .footer-fixed {
-  bottom: env(safe-area-inset-bottom);
+  bottom: var(--bottom);
 }

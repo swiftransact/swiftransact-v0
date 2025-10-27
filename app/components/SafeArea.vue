@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
 <style scoped>
   .top {
     height: constant(safe-area-inset-top); 
-    height: env(safe-area-inset-top);
+    height: var(--top);
     background: v-bind(backgroundColor);
     position: fixed ;
     top: 0;
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
     z-index: 1000;
   }
   .bottom {
-  height: env(safe-area-inset-bottom);
+  height: var(--bottom);
   background: v-bind(backgroundColor);
     }
 </style>

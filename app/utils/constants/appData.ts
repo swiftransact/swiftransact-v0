@@ -1,3 +1,5 @@
+import type { IconName } from "../types/icons"
+
 export const walletOptions = [
     {
         name: 'MetaMask',
@@ -21,3 +23,25 @@ export const walletOptions = [
     },
     
 ]
+export const navItems: { name: string, icon: IconName, value: string }[] = [
+    {
+        name: 'Home',
+        icon: 'home-bold',
+        value: 'home'
+    },
+    {
+        name: 'Convert',
+        icon: 'swap-fill',
+        value: 'convert'
+    },
+    {
+        name: 'Bills',
+        icon: 'phone-bill',
+        value: 'bills'
+    },
+    {
+        name: 'Profile',
+        icon: 'profile',
+        value: 'profile'
+    }
+  ]

@@ -42,7 +42,8 @@ export const ICON_NAMES = [
   'gear-loader',
   'bell',
   'arrow_head_down',
-  'arrow_head_up'
+  'arrow_head_up',
+  'profile'
 ] as const
 
 export type IconName = typeof ICON_NAMES[number]
