@@ -8,7 +8,7 @@ import { computed } from 'vue'
 const props = defineProps({
   color: {
     type: String,
-    default: 'var(--color-divider)',
+    default: 'var(--color-background-input)',
   },
   height: {
     type: String,

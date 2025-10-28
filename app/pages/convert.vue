@@ -4,7 +4,7 @@
             <div class="flex gap-2 items-center p-2 rounded-[64px] max-w-[90px] bg-background-input">
                 <img src="/images/coins/phantom.png" alt="phantom" class="w-[16px] h-[16px] object-contain" />
                 <span class="text-xs font-medium truncate text-text-black">Phantoms</span>
-                <icon @click="showSelectModal = !showSelectModal" :name="showSelectModal ? 'arrow_head_up' : 'arrow_head_down'" :size="16" :color="isDark ? '#FFFFFF' : '#000000'" />
+                <icon @click="showSelectModal = !showSelectModal" :name="showSelectModal ? 'arrow_head_up' : 'arrow_head_down'" :size="16" color="var(--color-black)" />
             </div>
         </Teleport>
 
@@ -23,8 +23,6 @@
   </template>
   
   <script setup lang="ts">
-  import { useDark } from '@vueuse/core'
-  const isDark = useDark()
   import { walletOptions } from '~/utils/constants/appData'
 
   const isMounted = ref(false)
