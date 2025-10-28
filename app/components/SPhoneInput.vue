@@ -1,14 +1,15 @@
 <template>
   <div class="flex gap-2 relative">
-    <div class="flag-container">
+    <div @click="showSelectFlag = !showSelectFlag" :class="{ 'error': !isValid, 'success': isValid && modelValue }"  class="flag-container">
         <span>{{ getFlagEmoji(selectedCountry) }}</span>
-        <icon @click="showSelectFlag = !showSelectFlag" :size="16" :name="showSelectFlag ? 'arrow_head_up' : 'arrow_head_down'" color="var(--color-black)" />
+        <icon :size="16" :name="showSelectFlag ? 'arrow_head_up' : 'arrow_head_down'" color="var(--color-black)" />
     </div>
     <input 
-        :class="{ 'error': !isValid }" 
+        :class="{ 'error': !isValid, 'success': isValid && modelValue }" 
         type="text" :modelValue="modelValue" 
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         placeholder="Enter your phone number" 
+        inputmode="numeric"
     />
     <Transition name="slide-fade">
         <div v-if="showSelectFlag" class="absolute select-flag">
@@ -19,7 +20,7 @@
                 placeholder="Search country..." 
                 @click.stop
             />
-            <div class="max-h-[150px] rounded-md overflow-y-auto">
+            <div class="max-h-[180px] rounded-md overflow-y-auto">
                 <div 
                     @click="selectedCountry = option.code; showSelectFlag = false; searchQuery = '';" 
                     :class="{ 'active': selectedCountry === option.code }" 
@@ -83,13 +84,14 @@ const isValid = computed(() => {
 
 <style scoped>
 .select-flag, input, .flag-container {
-    background-color:  #F6F6F6;
-    border: 1px solid  #F6F6F6 !important;
+    background-color:  var(--color-background-input);
+    border: 1px solid  var(--color-border4) !important;
     border-radius: 8px;
-    color: #000;
+    color: var(--color-black);
+    z-index: 100;
 }
 .active{
-    background-color: #FFCBA4;
+    background-color: var(--color-primary);
 }
 .flag-container {
     width: 75px;
@@ -101,12 +103,7 @@ const isValid = computed(() => {
     gap: 10px;
     font-size: 16px;
 }
-.flag-container.dark, input.dark, .select-flag.dark{
-    background-color: #333 !important;
-    border-color: rgba(255, 255, 255, 0.22) !important;
-    color: #FFF;
-}
-.flag-container.success{
+.flag-container.success, input.success, select-flag.success{
     border-color: #29941B !important;
 }
 .flag-container.error, input.error{
@@ -123,6 +120,7 @@ input{
     font-weight: 400;
     letter-spacing: -0.5px;
     line-height: 22px;
+    width: 100%;
 }
 .select-flag{
     top: 110%;
