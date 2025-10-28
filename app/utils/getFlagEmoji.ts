@@ -1,3 +1,8 @@
+/**
+ * getFlagEmoji
+ * @param countryCode - The country code to get the flag emoji for
+ * @returns The flag emoji for the country code
+ */
 export default (countryCode: string) => {
     const codePoints = countryCode
     .toUpperCase()

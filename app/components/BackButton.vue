@@ -1,6 +1,6 @@
 <template>
     <button @click="navigateTo()" class="flex items-center gap-3">
-        <icon :name="iconName" :size="iconSize" :color="isDark ? '#FFFFFF' : '#000000'"  />
+        <icon :name="iconName" :size="iconSize" color="var(--color-black)"  />
         <span :class="textStyle">{{ title ?? 'Back' }}</span>
     </button>
   </template>

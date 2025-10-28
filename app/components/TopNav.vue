@@ -34,4 +34,4 @@ const slots = useSlots();
     padding-bottom: 15px;
     z-index: 1000;
 }
-</style>
+</style> 

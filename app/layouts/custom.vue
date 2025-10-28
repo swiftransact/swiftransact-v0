@@ -24,8 +24,8 @@ const topNavProps = computed(() => ({ title: route.meta.title as string | undefi
     max-width: 430px;
     margin: 0 auto;
     display: flex;
-    padding-top: calc(var(--top) + 55px);
+    padding-top: 80px;
     overscroll-behavior: none;
-    touch-action: pan-x pan-y;
+    touch-action: pan-y;
 }
 </style>

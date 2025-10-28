@@ -2,7 +2,7 @@
   <div class="flex gap-2 relative">
     <div class="flag-container">
         <span>{{ getFlagEmoji(selectedCountry) }}</span>
-        <icon @click="showSelectFlag = !showSelectFlag" :size="16" :name="showSelectFlag ? 'arrow_head_up' : 'arrow_head_down'" :color="isDark ? '#FFFFFF' : '#000000'" />
+        <icon @click="showSelectFlag = !showSelectFlag" :size="16" :name="showSelectFlag ? 'arrow_head_up' : 'arrow_head_down'" color="var(--color-black)" />
     </div>
     <input 
         :class="{ 'error': !isValid }" 
@@ -44,9 +44,7 @@
 import type { CountryCode } from 'libphonenumber-js';
 import { getCountries, getCountryCallingCode, isValidPhoneNumber } from 'libphonenumber-js'
 import { getName } from 'country-list'
-import { useDark } from '@vueuse/core';
 
-const isDark = useDark();
 const props = defineProps<{
   modelValue: string;
 }>();
