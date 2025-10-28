@@ -27,7 +27,6 @@ import type { Modal } from '~/utils/types/types';
 
 const emit = defineEmits(['update:step']);
 
-const router = useRouter();
 const showAll = ref(false);
 const showConnectingMore = ref(false);
 const showConnectedModal = ref(false);
@@ -49,10 +48,10 @@ const connectedModal:Modal = {
   primaryActionTitle: 'Done',
   secondaryActionTitle: 'Connect More Wallet',
   primaryAction: () => {
-    router.push('/enableNotifications')
+    goTo('/enableNotifications')
   },
   secondaryAction: () => {
-    router.push('/enableNotifications')
+    goTo('/enableNotifications')
   },
   icon: 'pencil-checkmark'
 }

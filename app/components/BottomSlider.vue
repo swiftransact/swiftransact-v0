@@ -9,7 +9,7 @@
                   <p class="font-semibold flex-1 text-center text-lg text-tertiary-text">{{ title }}</p>
                   <Icon name="close" :size="20" @click="emit('update:modelValue', false)" />
               </div>
-              <divider />
+              <divider color="#3333338C" />
            </template>
            <template v-else-if="modal">
             <div class="flex flex-col items-center px-5 py-5">

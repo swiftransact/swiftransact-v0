@@ -7,12 +7,13 @@
     </div>
     <div class="px-6 pb-5">
         <app-button title="Enable Notifications" variant="primary" />
-        <button class="text-primary p-2.5 text-base font-semibold w-full text-center">Skip</button>
+        <button @click="goTo('/home')" class="text-primary p-2.5 text-base font-semibold w-full text-center">Skip</button>
     </div>
   </s-app>
 </template>
 
 <script setup lang="ts">
+
 </script>
 
 <style scoped>

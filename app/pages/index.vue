@@ -59,9 +59,9 @@
   })
   const handleAction = (action: 'login' | 'create') => {
     if(action === 'login'){
-    //   router.push('/auth/login')
+    //   goTo('/auth/login')
     }else{
-      router.push('/auth/setup')
+      goTo('/auth/setup')
     }
   }
   </script>

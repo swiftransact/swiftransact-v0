@@ -22,11 +22,11 @@ const props = withDefaults(defineProps<{
     right: 0;
     bottom: 0;
     width: 100%;
-    height: 100vh; /* Fallback for older browsers */
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+    height: 100dvh;
+    padding-top: var(--top);
+    padding-bottom: var(--bottom);
+    padding-left: var(--left);
+    padding-right: var(--right);;
     display: flex;
     overflow: hidden;
     overscroll-behavior: none; /* Prevents pull-to-refresh and overscroll */
@@ -37,6 +37,7 @@ const props = withDefaults(defineProps<{
 @supports (height: 100svh) {
     .swift-container {
         height: 100svh;
+        min-height: 100dvh;
     }
 }
 </style>
