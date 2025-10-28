@@ -32,22 +32,22 @@ export const navItems: { name: string, icon: IconName, value: string }[] = [
     {
         name: 'Home',
         icon: 'home-bold',
-        value: '/home'
+        value: 'home'
     },
     {
         name: 'Convert',
         icon: 'swap-fill',
-        value: '/convert'
+        value: 'convert'
     },
     {
         name: 'Bills',
         icon: 'phone-bill',
-        value: '/bills'
+        value: 'bills'
     },
     {
         name: 'Profile',
         icon: 'profile',
-        value: '/profile'
+        value: 'profile'
     }
   ]
   export const appServices: {name: string, color: string, icon: IconName, action: () => void}[] = [

@@ -1,9 +1,13 @@
 <template>
     <div class="bottom-nav">
-      <div @click="navigateTo(item.value)" v-for="item in navItems" :key="item.name" class="flex flex-col gap-1 items-center">
-        <Icon :color="activeTab === item.value ? 'var(--color-primary)' : 'var(--color-subtext)' " :name="item.icon" :size="24" />
-        <span :class="activeTab === item.value ? 'active' : 'inactive'" class="text-xs font-medium text-center">{{ item.name }}</span>
-      </div>
+      <button 
+        v-for="item in navItems" :key="item.name" 
+        @click="goTo('/' + item.value)" 
+        class="flex flex-col gap-1 items-center"
+      >
+        <Icon :color="isActive(item.value) ? 'var(--color-primary)' : 'var(--color-subtext)' " :name="item.icon" :size="24" />
+        <span :class="isActive(item.value) ? 'active' : 'inactive'" class="text-xs font-medium text-center">{{ item.name }}</span>
+      </button>
     </div>
   </template>
   
@@ -11,8 +15,8 @@
 import { navItems } from '~/utils/constants/appData';
 
 const route = useRoute();
-const activeTab = computed(() => route.path);
-
+const activeTab = computed(() => route.name as string)
+const isActive = (path: string) => activeTab.value === path
   </script>
   <style scoped>
   .active{
