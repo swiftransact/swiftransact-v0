@@ -137,9 +137,10 @@ const onPaste = (event: ClipboardEvent) => {
 input{
     width: 75px;
     height: 48px;
-    background-color:  #F6F6F6;
-    border: 1px solid  #F6F6F6 !important;
+    background-color:  var(--color-background-input);
+    border: 1px solid  var(--color-border4) !important;
     border-radius: 8px;
+    color: var(--color-black);
     text-align: center;
     display: flex;
     align-items: center;
@@ -151,11 +152,6 @@ input.secure{
     -webkit-text-security: disc;
     text-security: disc;
     font-size: 20px;
-}
-input.dark{
-    background-color: #333;
-    border-color: rgba(255, 255, 255, 0.22) !important;
-    color: #FFF;
 }
 input.success{
     border-color: #29941B !important;
