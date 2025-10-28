@@ -1,17 +1,17 @@
 <template>
     <div class="bottom-nav">
-      <div @click="currentTab = item.value" v-for="item in navItems" :key="item.name" class="flex flex-col gap-1 items-center">
-        <Icon :color="currentTab === item.value ? 'var(--color-primary)' : 'var(--color-subtext)' " :name="item.icon" :size="24" />
-        <span :class="currentTab === item.value ? 'active' : 'inactive'" class="text-xs font-medium text-center">{{ item.name }}</span>
+      <div @click="navigateTo(item.value)" v-for="item in navItems" :key="item.name" class="flex flex-col gap-1 items-center">
+        <Icon :color="activeTab === item.value ? 'var(--color-primary)' : 'var(--color-subtext)' " :name="item.icon" :size="24" />
+        <span :class="activeTab === item.value ? 'active' : 'inactive'" class="text-xs font-medium text-center">{{ item.name }}</span>
       </div>
     </div>
   </template>
   
 <script setup lang="ts">
 import { navItems } from '~/utils/constants/appData';
-import { useAppStore } from '~/store/app';
 
-const { currentTab} = storeToRefs(useAppStore())
+const route = useRoute();
+const activeTab = computed(() => route.path);
 
   </script>
   <style scoped>

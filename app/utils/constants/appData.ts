@@ -3,23 +3,23 @@ import type { IconName } from "../types/icons"
 export const walletOptions = [
     {
         name: 'MetaMask',
-        icon: '/images/coins/metamask.jpg'
+        icon: '/images/coins/metamask.png'
     },
     {
         name: 'Backpack',
-        icon: '/images/coins/backpack.jpg'
+        icon: '/images/coins/backpack.png'
     },
     {
         name: 'Phantom',
-        icon: '/images/coins/phantom.jpg'
+        icon: '/images/coins/phantom.png'
     },
     {
         name: 'Trust Wallet',
-        icon: '/images/coins/trust.jpg'
+        icon: '/images/coins/trust.png'
     },
     {
         name: 'Zerion',
-        icon: '/images/coins/zerion.jpg'
+        icon: '/images/coins/zerion.png'
     },
     
 ]
@@ -27,21 +27,21 @@ export const navItems: { name: string, icon: IconName, value: string }[] = [
     {
         name: 'Home',
         icon: 'home-bold',
-        value: 'home'
+        value: '/home'
     },
     {
         name: 'Convert',
         icon: 'swap-fill',
-        value: 'convert'
+        value: '/convert'
     },
     {
         name: 'Bills',
         icon: 'phone-bill',
-        value: 'bills'
+        value: '/bills'
     },
     {
         name: 'Profile',
         icon: 'profile',
-        value: 'profile'
+        value: '/profile'
     }
   ]
