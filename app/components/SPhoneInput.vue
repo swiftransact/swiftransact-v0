@@ -30,7 +30,7 @@
                 >
                     <span>{{ getFlagEmoji(option.code) }}</span>
                     <span class="text-xs">({{ option.callingCode }})</span>
-                    <span class="text-xs">{{ option.name || option.code }}</span>
+                    <span class="text-xs">{{ option.name  || option.code }}</span>
                 </div>
                 <div v-if="filteredCountries.length === 0" class="py-3 px-2.5 text-xs text-subtext">
                     No countries found
@@ -141,22 +141,5 @@ input{
     background-color: rgba(255, 203, 164, 0.5);
 }
 
-/* Transition styles */
-.slide-fade-enter-active {
-    transition: all 0.2s ease-out;
-}
 
-.slide-fade-leave-active {
-    transition: all 0.15s ease-in;
-}
-
-.slide-fade-enter-from {
-    transform: translateY(-10px);
-    opacity: 0;
-}
-
-.slide-fade-leave-to {
-    transform: translateY(-5px);
-    opacity: 0;
-}
 </style>

@@ -18,7 +18,7 @@ const emit = defineEmits(['update:step']);
 
 const otp = ref('');
 const countdown = ref(1 * 60)
-const intervalId = ref<number | null>(null)
+const intervalId = ref<ReturnType<typeof setInterval> | null>(null)
 const isCodeExpired = ref(false)
 
 const handleSubmit = () => {

@@ -5,16 +5,19 @@
         <p class="text-sm font-medium text-subtext">Goodmorning</p>
         <p class="text-sm font-semibold text-text-black">Jane Adesuwamin</p>
     </div>
-    <slot v-if="right" name="right" />
-    <div v-else class="flex items-center gap-4">
-        <icon name="notifications" :size="16" color="var(--color-subtext)" />
-        <icon name="settings" :size="16" color="var(--color-subtext)" />
-        <icon name='box' :size="16" color="#F11DF8" />
+    <div class="flex items-center gap-4">
+      <slot v-if="right" name="right" />
+      <template v-else >
+          <icon name="notifications" :size="16" color="var(--color-subtext)" />
+          <icon name="settings" :size="16" color="var(--color-subtext)" />
+          <icon name='box' :size="16" color="#F11DF8" />
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+
 const props = defineProps<{
   title?: string;
   right?: boolean;
