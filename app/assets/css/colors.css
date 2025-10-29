@@ -3,6 +3,8 @@
 
 @theme {
     /* Fonts */
+    /* border radius */
+    --radius-lg: 64px;
     --font-sans: 'SF Pro Rounded', ui-rounded, 'SF Pro', system-ui, -apple-system, sans-serif;
     
     /* Colors */
@@ -102,5 +104,11 @@
     }
     .btn-transparent {
       @apply p-2.5 bg-transparent flex items-center gap-2 text-base font-semibold text-text-black tracking-[-0.4px];
+    }
+    h4{
+      @apply text-text-black text-base font-semibold tracking-[-0.5px];
+    }
+    h3{
+      @apply text-text-black text-2xl font-medium tracking-[-0.5px];
     }
   }

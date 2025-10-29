@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css', '~/assets/css/colors.css', '~/assets/css/fonts.css'],
   runtimeConfig: {
     public: {
-      
+      paystackSecretKey: process.env.NUXT_ENV_PAYSTACK,
     }
   },
   pwa: {

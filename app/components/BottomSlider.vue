@@ -49,7 +49,7 @@ type Modal = {
 }
 
 type BaseProps = {
-    modelValue: boolean;
+    modelValue: boolean | string | any;
 }
 
 // Discriminated union: either title (with slot) OR modal, but not both
@@ -69,7 +69,7 @@ if (import.meta.dev && props.title && !slots.default) {
 // Lock scroll when modal is open
 const isLocked = useScrollLock(document?.body)
 watch(() => props.modelValue, (value) => {
-    isLocked.value = value
+    isLocked.value = value as boolean
 }, { immediate: true })
 </script>
 
@@ -92,6 +92,7 @@ watch(() => props.modelValue, (value) => {
     position: absolute;
     bottom: 0;
     width: 100%;
+    padding-bottom: 10px;
 }
 
 /* Transition animations */

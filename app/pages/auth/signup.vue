@@ -19,9 +19,9 @@ import createPassword from '~/components/createAccount/createPassword.vue';
 import PhoneNumber from '~/components/createAccount/PhoneNumber.vue';
 import verifyOtp from '~/components/createAccount/verifyOtp.vue';
 import connectWallet from '~/components/createAccount/connectWallet.vue';
+import { useDark, useToggle } from "@vueuse/core";
 
-const step = ref(1);
-
+const step = ref(3);
 const renderComponent = () => {
     switch(step.value) {
         case 1:
