@@ -23,7 +23,7 @@
                   @click.stop
                   />
                   <div class="max-h-[180px] rounded-md overflow-y-auto">
-                      <p v-for="bank in banks" :key="bank.code" @click="updateBank(bank)" class="py-1.5 tracking-normal text-text-black px-2.5 text-xs cursor-pointer hover:bg-background" >{{ bank.name }}</p>
+                      <p v-for="bank in banks" :key="bank.code" @click="updateBank(bank)" class="py-2 tracking-normal text-text-black px-2.5 text-xs cursor-pointer hover:bg-background" >{{ bank.name }}</p>
                   </div>
            </div>
        </Transition>
