@@ -7,7 +7,9 @@
             </template>
         </top-nav>
         <div class="flex-1 px-[20px] bg-background">
-            <NuxtPage />
+            <keep-alive>
+                <NuxtPage />
+            </keep-alive>
         </div>
         <bottom-nav />
     </div>

@@ -1,10 +1,10 @@
 <template>
     <div class="">
         <Teleport v-if="isReady" to="#top-nav-right">
-            <div class="flex gap-2 items-center p-2 rounded-lg max-w-[90px] bg-background-input">
+            <div @click="showSelectModal = !showSelectModal" class="flex gap-2 items-center p-2 rounded-lg max-w-[90px] bg-background-input">
                 <img src="/images/coins/phantom.png" alt="phantom" class="w-[16px] h-[16px] object-contain" />
                 <span class="text-xs font-medium truncate text-text-black">Phantoms</span>
-                <icon @click="showSelectModal = !showSelectModal" :name="showSelectModal ? 'arrow_head_up' : 'arrow_head_down'" :size="16" color="var(--color-black)" />
+                <icon :name="showSelectModal ? 'arrow_head_up' : 'arrow_head_down'" :size="16" color="var(--color-black)" />
             </div>
         </Teleport>
         <div class="flex gap-2">

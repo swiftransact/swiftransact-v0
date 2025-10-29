@@ -7,7 +7,7 @@
            <template v-if="title">
                <div class="px-5 pb-3 flex items-center">
                   <p class="font-semibold flex-1 text-center text-lg text-tertiary-text">{{ title }}</p>
-                  <Icon name="close" :size="20" @click="emit('update:modelValue', false)" />
+                  <Icon color="var(--color-black)" name="close" :size="24" @click="emit('update:modelValue', false)" />
               </div>
               <divider color="#3333338C" />
            </template>
