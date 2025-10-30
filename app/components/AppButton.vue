@@ -1,18 +1,23 @@
 <template>
     <button :disabled="disabled" :class="variant" :type="type">
+        <icon v-if="prependIcon" :name="prependIcon" :size="18" :color="iconColor" />
         <span v-if="!loading">{{ title }}</span>
         <Loader v-else />
+        <icon v-if="appendIcon" :name="appendIcon" :size="18" :color="iconColor" />
     </button>
 </template>
 
 <script setup lang="ts">
-
+import type { IconName } from '~/utils/types/icons';
 const props = withDefaults(defineProps<{
     title: string;
     variant?: 'primary' | 'secondary' | 'tertiary' | 'tertiary1' | 'info';
     disabled?: boolean;
     loading?: boolean;
     type?: 'submit' | 'button';
+    prependIcon?: IconName;
+    appendIcon?: IconName;
+    iconColor?: string;
 }>(), {
     disabled: false,
     loading: false,
@@ -29,6 +34,10 @@ button{
     font-weight: 600;
     width: 100%;
     text-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 button:disabled{
     opacity: 0.5;
@@ -55,6 +64,6 @@ button:hover {
 }
 .info{
     background-color: var(--color-info);
-    color: var(--color-black);
+    color: #3F0E0B;
 }
 </style>

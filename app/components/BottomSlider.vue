@@ -83,7 +83,7 @@ watch(() => props.modelValue, (value) => {
     max-width: 430px;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    z-index: 100;
 }
 .slider-content{
     border-radius: 25px 25px 0 0;

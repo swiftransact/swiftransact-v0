@@ -89,6 +89,7 @@
         v-for="service in firstRowServices" 
         :key="service.name"
         class="flex flex-col items-center gap-2 text-center"
+        @click="goTo(service.to)"
       >
         <icon-box 
           tint-size="50px" 
@@ -116,6 +117,7 @@
         v-for="service in secondRowServices" 
         :key="service.name"
         class="flex flex-col items-center gap-2 text-center"
+        @click="goTo(service.to)"
       >
         <icon-box 
           tint-size="50px" 
@@ -135,7 +137,8 @@
 import { appServices, walletOptions, quickActions } from '~/utils/constants/appData'
 
 definePageMeta({
-  layout: 'custom'
+  layout: 'custom',
+  showDefaultActions: true
 })
 /******************************* Constants****************************** */
 const firstRowServices = appServices.slice(0, 2)

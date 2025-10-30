@@ -1,6 +1,7 @@
 <!-- pages/your-page.vue -->
 <template>
     <div class="h-full">
+        <toast />
     </div>
 </template>
 

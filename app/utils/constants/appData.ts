@@ -35,9 +35,9 @@ export const navItems: { name: string, icon: IconName, value: string }[] = [
         value: 'home'
     },
     {
-        name: 'Convert',
+        name: 'Transfer',
         icon: 'swap-fill',
-        value: 'convert'
+        value: 'transfer'
     },
     {
         name: 'Bills',
@@ -50,54 +50,42 @@ export const navItems: { name: string, icon: IconName, value: string }[] = [
         value: 'profile'
     }
   ]
-  export const appServices: {name: string, color: string, icon: IconName, action: () => void}[] = [
+  export const appServices: {name: string, color: string, icon: IconName, to: string}[] = [
     {
       name: 'Transfer',
       icon: 'swap-fill',
       color: '#0500FF',
-      action: () => {
-        log.info('action')
-      },
+      to: '/transfer',
     },
     {
       name: 'Recharge & data',
       icon: 'phone',
       color: '#4FA088',
-      action: () => {
-        log.info('action')
-      },
+      to: '/services/recharge',
     },
     {
       name: 'Tickets',
       icon: 'ticket',
       color: '#34A853',
-      action: () => {
-        log.info('action')
-      },
+      to: '/services/tickets',
     },
     {
       name: 'Flight',
       icon: 'flight',
       color: '#E0CC7F',
-      action: () => {
-        log.info('action')
-      },
+      to: '/services/flight',
     },
     {
       name: 'Electricity',
       icon: 'bulb',
       color: '#FBBC05',
-      action: () => {
-        log.info('action')
-      },
+      to: '/services/electricity',
     },
     {
       name: 'Bills',
       icon: 'phone-bill',
       color: '#2461ED',
-      action: () => {
-        log.info('action')
-      },
+      to: '/bills',
     }
   
   ]
@@ -116,5 +104,85 @@ export const navItems: { name: string, icon: IconName, value: string }[] = [
       label: 'More',
       icon: 'kebab-menu' as IconName,
       btnClass: 'btn-outlined text-subtext text-base font-semibold rounded-[64px] py-2 px-4'
+    }
+  ]
+  export const rechargeNetworks = [
+    {
+      name: 'MTN',
+      icon: '/images/mtn.png',
+    },
+    {
+      name: 'GLO',
+      icon: '/images/glo.png',
+    },
+    {
+      name: 'AIRTEL',
+      icon: '/images/airtel.png',
+    },
+    {
+      name: '9MOBILE',
+      icon: '/images/9mobile.jpeg',
+    }
+  ]
+  export const nigerianElectricityProviders = [
+    {
+      name: 'Abuja Electricity Distribution Company (AEDC)',
+      img: '/images/electricity/AEDC.jpg',
+      value: 'AEDC'
+    },
+    {
+      name: 'Aba Power Limited Electric (APLE)',
+      img: '/images/electricity/APLE.png',
+      value: 'APLE'
+    },
+    {
+      name: 'Benin Electricity Distribution Company (BEDC)',
+      img: '/images/electricity/BEDC.jpeg',
+      value: 'BEDC'
+    },
+    {
+      name: 'Eko Electricity Distribution Company (EKEDC)',
+      img: '/images/electricity/EKEDC.png',
+      value: 'EKEDC'
+    },
+    {
+      name: 'Enugu Electricity Distribution Company (EEDC)',
+      img: '/images/electricity/EEDC.jpeg',
+      value: 'EEDC'
+    },
+    {
+      name: 'Ibadan Electricity Distribution Company (IBEDC)',
+      img: '/images/electricity/IBEDC.jpeg',
+      value: 'IBEDC'
+    },
+    {
+      name: 'Ikeja Electric (IE)',
+      img: '/images/electricity/IE.jpeg',
+      value: 'IE'
+    },
+    {
+      name: 'Jos Electricity Distribution Company (JEDC)',
+      img: '/images/electricity/JEDC.jpeg',
+      value: 'JEDC'
+    },
+    {
+      name: 'Kaduna Electric (KAEDCO)',
+      img: '/images/electricity/KAEDCO.',
+      value: 'KAEDCO'
+    },
+    {
+      name: 'Kano Electricity Distribution Company (KEDCO)',
+      img: '/images/electricity/KEDCO.png',
+      value: 'KEDCO'
+    },
+    {
+      name: 'Port Harcourt Electricity Distribution Company (PHEDC)',
+      img: '/images/electricity/PHEDC.jpeg',
+      value: 'PHEDC'
+    },
+    {
+      name: 'Yola Electricity Distribution Company (YEDC)',
+      img: '/images/electricity/YEDC.jpeg',
+      value: 'YEDC'
     }
   ]

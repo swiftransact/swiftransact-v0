@@ -1,12 +1,12 @@
 <template>
     <div class="flex-col home overflow-y-auto flex  w-full pb-50">
-        <top-nav :right="topNavProps.right" :title="topNavProps.title">
+        <top-nav v-bind="topNavProps">
             <template v-if="topNavProps.right" #right>
                 <!-- teleport target -->
                  <div id="top-nav-right" />
             </template>
         </top-nav>
-        <div class="flex-1 px-[20px] bg-background">
+        <div class="flex-1 px-5 bg-background">
             <keep-alive>
                 <NuxtPage />
             </keep-alive>
@@ -18,7 +18,12 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const topNavProps = computed(() => ({ title: route.meta.title as string | undefined, right: route.meta.right as boolean | undefined }))
+const topNavProps = computed(() => ({ 
+    title: route.meta.title as string | undefined, 
+    right: route.meta.right as boolean | undefined,
+    showWallet: route.meta.showWallet as boolean | undefined,
+    showDefaultActions: route.meta.showDefaultActions as boolean | undefined
+}))
 </script>
 <style scoped>
 .home{
