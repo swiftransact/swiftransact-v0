@@ -27,3 +27,8 @@ export type Bank = {
     createdAt: string
     updatedAt: string
 }
+export type Toast = {
+    notification: string
+    type: 'success' | 'error' | 'warning' | 'info'
+    id: string
+}

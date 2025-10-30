@@ -49,6 +49,9 @@ export const ICON_NAMES = [
   'flight',
   'ticket',
   'convert',
+  'share',
+  'copy',
+  'x'
 ] as const
 
 export type IconName = typeof ICON_NAMES[number]

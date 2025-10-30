@@ -1,13 +1,14 @@
 <template>
   <div class="flex justify-between items-center top-nav">
-    <back-button v-if="title" :title="title" />
+    <span v-if="title" class="text-base font-semibold text-text-black">{{ title }}</span>
     <div v-else>
         <p class="text-sm font-medium text-subtext">Goodmorning</p>
         <p class="text-sm font-semibold text-text-black">Jane Adesuwamin</p>
     </div>
     <div class="flex items-center gap-4">
+      <select-wallet v-if="showWallet" />
       <slot v-if="right" name="right" />
-      <template v-else >
+      <template v-if="showDefaultActions" >
           <icon name="notifications" :size="16" color="var(--color-subtext)" />
           <icon name="settings" :size="16" color="var(--color-subtext)" />
           <icon name='box' :size="16" color="#F11DF8" />
@@ -18,10 +19,14 @@
 
 <script setup lang="ts">
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   title?: string;
   right?: boolean;
-}>();
+  showWallet?: boolean;
+  showDefaultActions?: boolean;
+}>(), {
+  showDefaultActions: false
+});
 </script>
 
 <style scoped>
@@ -35,6 +40,6 @@ const props = defineProps<{
     padding-left: calc(var(--left) + 20px);
     padding-right: calc(var(--right) + 20px);
     padding-bottom: 15px;
-    z-index: 1000;
+    z-index: 100;
 }
 </style> 
