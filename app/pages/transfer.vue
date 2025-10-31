@@ -50,7 +50,6 @@ import type { Modal } from '~/utils/types/types'
     })
     const activeTab = ref('transfer')
     const selectedCoin = ref('USDC')
-    const { isReady } = useTeleport('#top-nav-right')
     const bankDetails = ref<BankAccountDetails | null>(null)
     const activeModal = ref<'success' | 'error' | 'processing' | null>(null)
 
@@ -90,7 +89,7 @@ import type { Modal } from '~/utils/types/types'
         icon: 'check-mark',
         primaryActionTitle: 'View receipt',
         primaryAction: () => {
-            goTo('/receipts')
+            goTo(`/receipts/transfer`)
         },
         secondaryActionTitle: 'Close',
         secondaryAction: () => {

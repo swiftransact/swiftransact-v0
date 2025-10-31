@@ -1,13 +1,17 @@
 import type { IconName } from "./icons";
 
 export type Modal = {
-    title: string;
+    title?: string;
     subtitle?: string;
     icon: IconName;
     primaryActionTitle: string;
     primaryAction: () => void;
     secondaryActionTitle?: string;
     secondaryAction?: () => void;
+    iconColor?: string;
+    primaryActionIcon?: IconName;
+    secondaryActionIcon?: IconName;
+    type?: 'success' | 'error' | 'warning' | 'info';
 }
 export type Bank = {
     id: number
@@ -32,3 +36,4 @@ export type Toast = {
     type: 'success' | 'error' | 'warning' | 'info'
     id: string
 }
+export type ReceiptType = 'transfer' | 'electricity' | 'data' | 'airtime'

@@ -8,6 +8,10 @@
     --font-sans: 'SF Pro Rounded', ui-rounded, 'SF Pro', system-ui, -apple-system, sans-serif;
     
     /* Colors */
+    --color-mtn: #F9C62F;
+    --color-glo: #32B721;
+    --color-airtel: #F94646;
+    --color-9mobile: #bece27;
     --color-grey-bg: #F6F6F6;
     --color-background: #FFFFFF;
     --color-black: #000000;

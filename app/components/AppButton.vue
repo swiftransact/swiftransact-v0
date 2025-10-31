@@ -1,9 +1,9 @@
 <template>
     <button :disabled="disabled" :class="variant" :type="type">
-        <icon v-if="prependIcon" :name="prependIcon" :size="18" :color="iconColor" />
+        <icon v-if="prependIcon" :name="prependIcon" :size="18" :color="iconColor || textColor[variant as keyof typeof textColor]" />
         <span v-if="!loading">{{ title }}</span>
         <Loader v-else />
-        <icon v-if="appendIcon" :name="appendIcon" :size="18" :color="iconColor" />
+        <icon v-if="appendIcon" :name="appendIcon" :size="18" :color="iconColor || textColor[variant as keyof typeof textColor]" />
     </button>
 </template>
 
@@ -24,6 +24,13 @@ const props = withDefaults(defineProps<{
     variant: 'primary',
     type: 'button'
 })
+const textColor = {
+    primary: '#FFFFFF',
+    secondary: '#FFFFFF',
+    tertiary: '#FFFFFF',
+    tertiary1: '#FFFFFF',
+    info: '#3F0E0B',
+}
 </script>
 <style scoped>
 button{

@@ -2,9 +2,9 @@
     <div class="flex justify-between items-center top-nav">
       <BackButton :icon-size="24" text-style="text-lg font-semibold text-text-black" :title="title" />
       <div class="flex items-center gap-4">
-        <slot name="right" />
         <icon v-if="showSettings" name="settings" :size="16" color="var(--color-subtext)" />
         <select-wallet v-if="showWallet" />
+        <slot name="right" />
       </div>
     </div>
   </template>

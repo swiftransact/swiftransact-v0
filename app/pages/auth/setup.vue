@@ -18,7 +18,6 @@
 import { useDark } from '@vueuse/core';
 
 const isDark = useDark();
-const router = useRouter();
 
 const signUpWithWallet = () => {
   goTo('/auth/signup');

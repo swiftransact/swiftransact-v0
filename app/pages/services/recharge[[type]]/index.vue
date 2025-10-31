@@ -5,7 +5,7 @@
     <p class="text-sm text-subtext">Choose one network to recharge your number</p>
     
     <div class="grid grid-cols-2 gap-3 mt-4 mb-4">
-        <button class="bg-background-input flex items-center justify-between rounded-[8px] p-3.5" v-for="network in rechargeNetworks" :key="network.name">
+        <button @click="nav(network)" class="bg-background-input flex items-center justify-between rounded-[8px] p-3.5" v-for="network in rechargeNetworks" :key="network.name">
             <p class="text-text-black text-base font-semibold">{{ network.name }}</p>
             <img :src="network.icon" :alt="network.name" class="w-[31px] h-[31px] object-cover rounded-full" />
         </button>
@@ -20,9 +20,22 @@ import { rechargeNetworks } from '~/utils/constants/appData';
 definePageMeta({
   layout: 'navigation',
   title: 'Recharge & Data',
-  showSettings: true
+  showSettings: true,
+  validate(route) {
+    if(route.params.type){
+      return route.params.type === 'airtime' || route.params.type === 'data'
+    }
+    return true
+  },
 })
 const activeTab = ref('airtime')
+const nav = (navItem: typeof rechargeNetworks[number]) => {
+  if(activeTab.value === 'airtime') {
+    navigateTo(navItem.airtimeTo)
+  } else {
+    navigateTo(navItem.dataTo)
+  }
+}
 </script>
 
 <style scoped>

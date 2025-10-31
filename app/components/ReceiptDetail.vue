@@ -20,8 +20,10 @@
 </template>
 
 <script setup lang="ts">
+import type { ReceiptType } from '~/utils/types/types';
+
 const props = withDefaults(defineProps<{
-  type: 'transfer' | 'electricity' | 'data' | 'airtime'
+  type: ReceiptType
   provider?: 'mtn' | 'glo' | 'airtel' | '9mobile'
   copyValue?: string
   text?: string

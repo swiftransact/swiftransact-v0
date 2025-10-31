@@ -3,10 +3,10 @@
         <star left="0px" top="10px" />
         <star left="0px" top="430px" />
         <success-animation />
-        <p class="text-[20px] mt-5 mb-2 text-text-black text-center">Transfer Successful</p>
+        <p class="text-[20px] mt-5 mb-2 text-text-black text-center">{{ type === 'transfer' ? 'Transfer' : 'Recharge' }} Successful</p>
         <p class="text-base text-subtext text-center">Thank you for trusting swiftransact</p>
         <hr class="my-5 dashed" />
-        <ReceiptDetail type="transfer" />
+        <ReceiptDetail :copy-value="type === 'electricity' ? '1234567890' : undefined" :type="type" />
         <hr class=" mt-10 mb-4 dashed" />
         <div class="flex justify-center gap-4">
             <app-button variant="info" title="Share" prepend-icon="share" />
@@ -33,10 +33,18 @@
 </template>
 
 <script setup lang="ts">
+import type { ReceiptType } from '~/utils/types/types';
+
 definePageMeta({
   layout: 'navigation',
-  title: 'Receipts'
+  title: 'Receipts',
+  validate(route) {
+      const validTypes: ReceiptType[] = ['transfer', 'electricity', 'data', 'airtime']
+      return validTypes.includes(route.params.type as ReceiptType)
+  },
 })
+const route = useRoute()
+const type = route.params.type as ReceiptType
 const details = [
     {
         name: 'Email address',
