@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen p-5 flex items-center justify-center">
-    <div class="max-w-[500px] text-center flex items-center flex-col gap-4">
+  <s-app class="items-center justify-center">
+    <div class="max-w-[500px] p-5 text-center flex items-center flex-col gap-4">
       <IconBox tint-size="120px" tint-color="var(--color-background1)" name="warning" :size="80" :color="'var(--color-primary)'" />
       <h1 class="text-primary text-7xl font-bold tracking-[-2px]">404</h1>
       <h3 class="text-text-black text-[28px] font-semibold tracking-[-0.5px] m-0">Page Not Found</h3>
@@ -12,7 +12,7 @@
         class="mt-4 max-w-[280px]"
       />
     </div>
-  </div>
+  </s-app>
 </template>
 
 <script setup lang="ts">
