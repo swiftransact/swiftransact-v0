@@ -110,18 +110,26 @@ export const navItems: { name: string, icon: IconName, value: string }[] = [
     {
       name: 'MTN',
       icon: '/images/mtn.png',
+      airtimeTo: '/services/rechargeairtime/mtn',
+      dataTo: '/services/rechargedata/mtn'
     },
     {
       name: 'GLO',
       icon: '/images/glo.png',
+      airtimeTo: '/services/rechargeairtime/glo',
+      dataTo: '/services/rechargedata/glo'
     },
     {
       name: 'AIRTEL',
       icon: '/images/airtel.png',
+      airtimeTo: '/services/rechargeairtime/airtel',
+      dataTo: '/services/rechargedata/airtel'
     },
     {
       name: '9MOBILE',
       icon: '/images/9mobile.jpeg',
+      airtimeTo: '/services/rechargeairtime/9mobile',
+      dataTo: '/services/rechargedata/9mobile'
     }
   ]
   export const nigerianElectricityProviders = [

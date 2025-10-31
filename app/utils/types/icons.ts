@@ -51,7 +51,10 @@ export const ICON_NAMES = [
   'convert',
   'share',
   'copy',
-  'x'
+  'x',
+  'recharge',
+  'receipt',
+  'info'
 ] as const
 
 export type IconName = typeof ICON_NAMES[number]

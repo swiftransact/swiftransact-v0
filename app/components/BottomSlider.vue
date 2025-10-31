@@ -15,12 +15,12 @@
             <div class="flex flex-col items-center px-5 py-5">
                 <icon :name="modal.icon" :size="90" :color="modal.iconColor || 'var(--color-primary)'" />
                 <div class="w-full mb-10 mt-6">
-                    <p class="text-text1 text-lg text-center font-semibold leading-5.5">{{ modal.title }}</p>
-                    <p v-if="modal.subtitle" class="text-text1 text-center text-sm">{{ modal.subtitle }}</p>
+                    <p v-if="modal.title" class="text-text1 text-lg text-center font-semibold leading-5.5">{{ modal.title }}</p>
+                    <p :style="{ color: textColor[modal.type as keyof typeof textColor] || 'var(--color-text1)' }" v-if="modal.subtitle" class="text-text1 text-center text-sm">{{ modal.subtitle }}</p>
                 </div>
                 <div class="flex gap-2 w-full">
-                    <app-button class="flex-1" v-if="modal.secondaryActionTitle" :title="modal.secondaryActionTitle" variant="info" @click="modal.secondaryAction" />
-                    <app-button class="flex-1" :title="modal.primaryActionTitle" variant="primary" @click="modal.primaryAction" />
+                    <app-button class="flex-1" v-if="modal.secondaryActionTitle" :title="modal.secondaryActionTitle" variant="info" :prepend-icon="modal.secondaryActionIcon" @click="modal.secondaryAction" />
+                    <app-button class="flex-1" :title="modal.primaryActionTitle" variant="primary" :prepend-icon="modal.primaryActionIcon" @click="modal.primaryAction" />
                 </div>
             </div>
            </template>
@@ -35,18 +35,7 @@
 
 <script setup lang="ts">
 import { useScrollLock } from '@vueuse/core';
-import type { IconName } from '~/utils/types/icons';
-
-type Modal = {
-    title: string;
-    subtitle?: string;
-    icon: IconName;
-    primaryActionTitle: string;
-    primaryAction: () => void;
-    secondaryActionTitle?: string;
-    secondaryAction?: () => void;
-    iconColor?: string;
-}
+import type { Modal } from '~/utils/types/types';
 
 type BaseProps = {
     modelValue: boolean | string | any;
@@ -71,6 +60,12 @@ const isLocked = useScrollLock(document?.body)
 watch(() => props.modelValue, (value) => {
     isLocked.value = value as boolean
 }, { immediate: true })
+const textColor = {
+    success: 'var(--color-success)',
+    error: 'var(--color-error)',
+    warning: 'var(--color-warning)',
+    info: 'var(--color-text1)',
+}
 </script>
 
 <style scoped>
