@@ -10,7 +10,7 @@
       <slot v-if="right" name="right" />
       <template v-if="showDefaultActions" >
           <icon name="notifications" :size="16" color="var(--color-subtext)" />
-          <icon name="settings" :size="16" color="var(--color-subtext)" />
+          <icon @click="goTo('/settings')" name="settings" :size="16" color="var(--color-subtext)" />
           <icon name='box' :size="16" color="#F11DF8" />
       </template>
     </div>
