@@ -1,5 +1,7 @@
 import type { IconName } from "./icons";
+import { NETWORK_PROVIDERS } from "../constants/appData";
 
+export type NetworkProvider = typeof NETWORK_PROVIDERS[number]
 export type Modal = {
     title?: string;
     subtitle?: string;

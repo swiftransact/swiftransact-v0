@@ -1,5 +1,6 @@
 import type { IconName } from "../types/icons"
 
+export const NETWORK_PROVIDERS = ['mtn', 'glo', 'airtel', '9mobile']
 export const walletOptions = [
     {
         name: 'MetaMask',
