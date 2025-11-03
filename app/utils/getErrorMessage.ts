@@ -1,5 +1,5 @@
 export const handleError = (error: any) => {
-    console.log(error.response.data.message)
+    log.error(error)
       if (error?.response?.data) {
       if(error.response.data.message) return error.response.data.message;
       return error.response.data
