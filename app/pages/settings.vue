@@ -158,7 +158,7 @@ const emailNotifications = ref(true)
 const transactionAlerts = ref(true)
 
 const handleLogout = () => {
-  console.log('Logging out...')
+  log.info('Logging out...')
 }
 </script>
 
