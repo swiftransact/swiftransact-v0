@@ -7,6 +7,10 @@ A modern financial transaction application built with Nuxt 3, Vue 3, and Tailwin
 - **Framework**: Nuxt 3
 - **UI Library**: Vue 3 (Composition API)
 - **Styling**: TailwindCSS v4 (with custom design tokens)
+- **State Management**: Pinia (via Nuxt stores)
+- **Data Fetching**: TanStack Query (Vue Query)
+- **HTTP Client**: Axios
+- **Phone Validation**: libphonenumber-js
 - **PWA**: @vite-pwa/nuxt
 - **Utilities**: @vueuse/core
 - **Language**: TypeScript
@@ -56,15 +60,44 @@ swiftransact-v0/
 │   │   │   ├── colors.css      # Design tokens & theme colors
 │   │   │   └── fonts.css       # Font-face declarations
 │   │   └── typography/         # Font files (SF Pro Rounded)
-│   ├── components/
-│   │   └── Icon.vue            # Centralized icon component
-│   ├── composables/            # Vue composables (see below)
-│   ├── layouts/                # Layout components (optional)
-│   ├── pages/                  # File-based routing (see below)
-│   └── utils/
-│       └── types/
-│           └── icons.ts        # Icon type definitions
+│   ├── components/             # Reusable UI components (40+ components)
+│   │   ├── Icon.vue            # Centralized icon component
+│   │   ├── AppButton.vue       # Button component
+│   │   ├── AppInput.vue        # Input component
+│   │   ├── Toast.vue           # Notification system
+│   │   ├── BottomSlider.vue    # Modal/bottom sheet
+│   │   ├── SelectBank.vue      # Bank account input with verification
+│   │   └── ...                 # Many more components
+│   ├── composables/            # Vue composables
+│   │   ├── useToast.ts         # Toast notifications
+│   │   ├── useBank.ts          # Paystack integration
+│   │   └── useTeleport.ts      # Teleport helpers
+│   ├── layouts/                # Layout components
+│   │   ├── default.vue
+│   │   ├── custom.vue
+│   │   └── navigation.vue
+│   ├── pages/                  # File-based routing
+│   │   ├── index.vue           # Landing page
+│   │   ├── home.vue            # Home page
+│   │   ├── auth/               # Authentication pages
+│   │   ├── services/           # Service pages (bills, recharge, etc.)
+│   │   └── receipts/           # Receipt pages
+│   ├── plugins/                # Nuxt plugins
+│   │   └── vue-query.ts        # TanStack Query setup
+│   ├── store/                  # Pinia stores
+│   │   └── app.ts              # Global app state
+│   └── utils/                  # Utility functions
+│       ├── types/              # Type definitions
+│       │   ├── icons.ts        # Icon types
+│       │   ├── types.d.ts      # Global types
+│       │   └── rules.ts        # Validation types
+│       ├── constants/          # App constants
+│       ├── log.ts              # Logging utility
+│       ├── validateNumber.ts   # Phone validation
+│       ├── copy.ts             # Clipboard utility
+│       └── ...                 # More utilities
 ├── public/                     # Static assets
+│   └── images/                 # Images (coins, logos, etc.)
 ├── nuxt.config.ts             # Nuxt configuration
 ├── tsconfig.json              # TypeScript configuration
 └── package.json               # Dependencies
@@ -275,7 +308,44 @@ log.info("User data:", user);
 
 ### Reusable Components
 
-The app provides a set of pre-built, styled components for common UI patterns. Always use these instead of creating custom implementations.
+The app provides a comprehensive set of pre-built, styled components for common UI patterns. Always use these instead of creating custom implementations.
+
+#### Toast (`app/components/Toast.vue`)
+
+A stacked notification system that displays up to 3 toast messages with automatic dismissal.
+
+**Features**:
+
+- Stacked display with scale animations
+- Auto-dismissal after 15 seconds
+- Support for success, error, warning, and info types
+- Duplicate prevention
+- Color-coded by type
+
+**Usage**:
+
+```vue
+<script setup>
+// Use the useToast composable (see Composables section)
+const showNotification = (type, message) => {
+  useToast(type, message);
+};
+</script>
+
+<template>
+  <!-- Toast component should be placed in your layout/app.vue -->
+  <Toast />
+</template>
+```
+
+**Toast Types**:
+
+- `success` - Green background with checkmark icon
+- `error` - Red background with close icon
+- `warning` - Orange background with warning icon
+- `info` - Blue background
+
+---
 
 #### AppButton (`app/components/AppButton.vue`)
 
@@ -464,50 +534,539 @@ A customizable loading spinner component.
 
 ---
 
-### Composables (`app/composables/`)
+#### AmountInput (`app/components/AmountInput.vue`)
 
-Composables are reusable composition functions for managing stateful logic, side effects, and shared functionality across components.
+A specialized input component for entering monetary amounts with Nigerian Naira (₦) symbol.
 
-**Purpose**: Extract and reuse component logic following the Composition API pattern
+**Props**:
 
-**Example**:
+- `modelValue` (string | number, required) - Amount value (v-model)
+- `placeholder` (string, optional, default: 'Enter Amount') - Placeholder text
+- `orientation` ('vertical' | 'horizontal', optional, default: 'vertical') - Layout direction
+- `disabled` (boolean, optional, default: false) - Disabled state
+- `buttonTitle` (string, required) - Button text
+- `onClick` (function, optional) - Button click handler
 
-```typescript
-// app/composables/useAuth.ts
-export const useAuth = () => {
-  const user = ref(null);
-  const isAuthenticated = computed(() => !!user.value);
-
-  const login = async (credentials) => {
-    // Login logic
-  };
-
-  const logout = () => {
-    // Logout logic
-  };
-
-  return {
-    user,
-    isAuthenticated,
-    login,
-    logout,
-  };
-};
-```
-
-**Usage in components**:
+**Usage**:
 
 ```vue
 <script setup>
-const { user, isAuthenticated, login } = useAuth();
+const amount = ref("");
+const handlePayment = () => {
+  console.log("Amount:", amount.value);
+};
+</script>
+
+<template>
+  <!-- Vertical layout -->
+  <AmountInput
+    v-model="amount"
+    placeholder="Enter Amount"
+    buttonTitle="Pay"
+    :disabled="!amount"
+    :onClick="handlePayment"
+  />
+
+  <!-- Horizontal layout -->
+  <AmountInput
+    v-model="amount"
+    orientation="horizontal"
+    buttonTitle="Continue"
+  />
+</template>
+```
+
+**Features**:
+
+- Numeric input only
+- Automatic non-digit filtering
+- Max length of 10 digits
+- Naira symbol display
+- Built-in button for actions
+- Responsive layouts
+
+---
+
+#### BottomSlider (`app/components/BottomSlider.vue`)
+
+A versatile bottom sheet/modal component with two modes: slot-based (with title) or modal-based (pre-configured).
+
+**Props**:
+
+- `modelValue` (boolean, required) - Controls visibility (v-model)
+- `title` (string, optional) - Title for slot-based mode
+- `modal` (Modal, optional) - Pre-configured modal object
+
+**Usage**:
+
+```vue
+<script setup>
+const showSheet = ref(false);
+const showModal = ref(false);
+
+const modalConfig: Modal = {
+  icon: "check-mark",
+  title: "Success",
+  subtitle: "Payment completed successfully",
+  primaryActionTitle: "View Receipt",
+  primaryAction: () => {
+    navigateTo("/receipts");
+  },
+  secondaryActionTitle: "Close",
+  secondaryAction: () => {
+    showModal.value = false;
+  },
+  type: "success",
+};
+</script>
+
+<template>
+  <!-- Slot-based mode (custom content) -->
+  <BottomSlider v-model="showSheet" title="Select Payment Method">
+    <div class="p-4">
+      <!-- Your custom content here -->
+    </div>
+  </BottomSlider>
+
+  <!-- Modal mode (pre-configured layout) -->
+  <BottomSlider v-model="showModal" :modal="modalConfig" />
+</template>
+```
+
+**Features**:
+
+- Smooth slide-up/down animations
+- Backdrop overlay with click-to-close
+- Auto scroll-lock when open
+- Drag handle
+- Support for icons and actions
+- Type-based text colors (success/error/warning/info)
+- Safe area support
+
+---
+
+#### SelectBank (`app/components/SelectBank.vue`)
+
+An advanced bank account input component with Paystack integration for account verification.
+
+**Props**:
+
+- `modelValue` (BankAccountDetails | null, required) - Bank account data (v-model)
+
+**Usage**:
+
+```vue
+<script setup>
+import type { BankAccountDetails } from "~/components/SelectBank.vue";
+
+const bankAccount = (ref < BankAccountDetails) | (null > null);
+
+watch(bankAccount, (newVal) => {
+  if (newVal?.accountName) {
+    console.log("Verified account:", newVal);
+  }
+});
+</script>
+
+<template>
+  <SelectBank v-model="bankAccount" />
+
+  <!-- Display verification status -->
+  <p v-if="bankAccount?.accountName" class="text-success">
+    {{ bankAccount.accountName }}
+  </p>
+</template>
+```
+
+**Features**:
+
+- Searchable bank dropdown
+- Real-time account verification via Paystack API
+- Auto-populated account name on successful verification
+- 10-digit account number validation
+- Loading states during verification
+- Error handling and display
+- Dark mode support
+
+**BankAccountDetails Type**:
+
+```typescript
+{
+  bankName: string;
+  bankCode: string;
+  accountNumber: string;
+  accountName: string; // Auto-filled after verification
+}
+```
+
+---
+
+#### Toggle (`app/components/Toggle.vue`)
+
+A customizable toggle/switch component with label support.
+
+**Props**:
+
+- `modelValue` (boolean, required) - Toggle state (v-model)
+- `disabled` (boolean, optional, default: false) - Disabled state
+- `label` (string, optional) - Label text
+- `orientation` ('vertical' | 'horizontal', optional, default: 'horizontal') - Layout direction
+
+**Usage**:
+
+```vue
+<script setup>
+const notificationsEnabled = ref(true);
+const darkMode = ref(false);
+</script>
+
+<template>
+  <!-- With label (horizontal) -->
+  <Toggle v-model="notificationsEnabled" label="Enable Notifications" />
+
+  <!-- Vertical layout -->
+  <Toggle v-model="darkMode" label="Dark Mode" orientation="vertical" />
+
+  <!-- Disabled state -->
+  <Toggle v-model="setting" label="Coming Soon" :disabled="true" />
+</template>
+```
+
+**Features**:
+
+- Smooth animations
+- Dark mode support
+- Customizable orientation
+- Accessible (ARIA attributes)
+- Primary color theming
+
+---
+
+#### CheckBox (`app/components/CheckBox.vue`)
+
+A styled checkbox component with custom sizing and colors.
+
+**Props**:
+
+- `modelValue` (boolean, required) - Checkbox state (v-model)
+- `disabled` (boolean, optional, default: false) - Disabled state
+- `label` (string, optional) - Label text
+- `id` (string, optional) - HTML id (auto-generated if not provided)
+- `size` (string, optional, default: '20px') - Checkbox size
+- `color` (string, optional, default: 'var(--color-success)') - Checked color
+
+**Usage**:
+
+```vue
+<script setup>
+const agreedToTerms = ref(false);
+const newsletter = ref(true);
+</script>
+
+<template>
+  <!-- Basic checkbox -->
+  <CheckBox v-model="agreedToTerms" label="I agree to the terms" />
+
+  <!-- Custom size and color -->
+  <CheckBox
+    v-model="newsletter"
+    label="Subscribe to newsletter"
+    size="24px"
+    color="#EA4E1B"
+  />
+
+  <!-- Disabled -->
+  <CheckBox v-model="setting" label="Not available" :disabled="true" />
+</template>
+```
+
+**Features**:
+
+- Custom sizing (automatically scales checkmark)
+- Custom colors
+- Auto-generated unique IDs
+- Dark mode support
+- Smooth transitions
+
+---
+
+#### SForm (`app/components/SForm.vue`)
+
+A smart form wrapper component that automatically tracks validation state of child inputs and manages form submission.
+
+**Props**:
+
+- `modelValue` (boolean, optional, default: false) - Form validity state (v-model)
+
+**Emits**:
+
+- `update:modelValue` - Emits when form validity changes
+- `submit` - Emits when form is submitted and valid
+
+**Usage**:
+
+```vue
+<script setup>
+const isFormValid = ref(false);
+
+const handleSubmit = () => {
+  console.log("Form submitted successfully!");
+  // Process form data
+};
+</script>
+
+<template>
+  <SForm v-model="isFormValid" @submit="handleSubmit">
+    <!-- Child inputs automatically register with the form -->
+    <AppInput
+      v-model="email"
+      label="Email"
+      type="email"
+      :rules="[
+        { rule: (v) => !!v, message: 'Email is required' },
+        { rule: (v) => /@/.test(v), message: 'Invalid email' },
+      ]"
+    />
+
+    <AppInput
+      v-model="password"
+      label="Password"
+      type="password"
+      :rules="[{ rule: (v) => v.length >= 8, message: 'Min 8 characters' }]"
+    />
+
+    <AppButton type="submit" title="Submit" :disabled="!isFormValid" />
+  </SForm>
+</template>
+```
+
+**Features**:
+
+- Automatic validation state tracking across all child inputs
+- Computes overall form validity in real-time
+- Provides `formContext` to child components via Vue's provide/inject
+- Prevents submission when form is invalid
+- No manual validation state management needed
+- Child inputs can register/unregister dynamically
+
+**How It Works**:
+
+1. Child inputs inject the `formContext`
+2. Each input registers itself with validation state on mount
+3. Form watches all input validation states
+4. Form validity is computed automatically
+5. `v-model` on form reflects overall validity
+6. Form only emits `submit` when all inputs are valid
+
+**Best Practices**:
+
+- Use with `AppInput` or other components that support form context
+- Bind `v-model` to track form validity state
+- Disable submit button based on form validity
+- Handle `@submit` event for form processing
+
+---
+
+### Store (`app/store/`)
+
+The application uses Pinia for global state management. Stores are automatically registered by Nuxt.
+
+#### useAppStore (`app/store/app.ts`)
+
+Global application state store managing wallet selection and toast notifications.
+
+**State**:
+
+```typescript
+{
+  selectedWallet: string           // Currently selected wallet
+  toasts: Toast[]                  // Active toast notifications
+}
+```
+
+**Actions**:
+
+```typescript
+removeToast(id: string): void     // Removes a toast by ID
+```
+
+**Usage**:
+
+```vue
+<script setup>
+import { useAppStore } from "~/store/app";
+
+const appStore = useAppStore();
+const { selectedWallet, toasts } = storeToRefs(appStore);
+
+// Update wallet
+selectedWallet.value = "metamask";
+
+// Remove a toast
+appStore.removeToast("toast-id");
 </script>
 ```
+
+**Integration**:
+
+- Used by `useToast` composable for notification management
+- Used by `Toast` component for displaying notifications
+- Used throughout app for wallet selection state
+
+**Best Practices**:
+
+- Use `storeToRefs()` to maintain reactivity when destructuring
+- Actions can be destructured directly without `storeToRefs`
+- Stores are auto-imported, no manual import needed in most cases
+
+---
+
+### Composables (`app/composables/`)
+
+Composables are reusable composition functions for managing stateful logic, side effects, and shared functionality across components. All composables are auto-imported in Nuxt.
+
+#### useToast (`app/composables/useToast.ts`)
+
+Displays toast notifications with automatic management and dismissal.
+
+**Signature**:
+
+```typescript
+useToast(type: 'success' | 'error' | 'warning' | 'info', notification: string): void
+```
+
+**Usage**:
+
+```vue
+<script setup>
+const handleSuccess = () => {
+  useToast("success", "Payment completed successfully!");
+};
+
+const handleError = (error: Error) => {
+  useToast("error", "Failed to process payment");
+};
+
+const showWarning = () => {
+  useToast("warning", "Low balance detected");
+};
+
+const showInfo = () => {
+  useToast("info", "Processing your request...");
+};
+</script>
+```
+
+**Features**:
+
+- Maximum 3 toasts displayed at once
+- Auto-dismissal after 15 seconds
+- Duplicate prevention (same message won't show twice)
+- Automatic stacking with FIFO queue
+- Works with the `Toast` component
+
+---
+
+#### useBank (`app/composables/useBank.ts`)
+
+Provides integration with Paystack's Bank API for fetching Nigerian banks and verifying account numbers.
+
+**Functions**:
+
+1. **useBank()** - Fetches list of all banks
+
+```typescript
+const { data, isLoading, error } = useBank();
+
+// data.value.data contains array of Bank objects
+```
+
+2. **verifyAccount(accountNumber, bankCode)** - Verifies a bank account
+
+```typescript
+const accountNumber = ref("0123456789");
+const bankCode = ref("058");
+
+const { data, isLoading, error } = verifyAccount(accountNumber, bankCode);
+
+// Automatically triggers when both values are valid
+// data.value.data.account_name contains the verified account name
+```
+
+**Usage Example**:
+
+```vue
+<script setup>
+const accountNumber = ref("");
+const selectedBankCode = ref("");
+
+// Get all banks
+const { data: banks } = useBank();
+
+// Verify account (auto-runs when account number is 10 digits)
+const {
+  data: verification,
+  isLoading: isVerifying,
+  error: verificationError,
+} = verifyAccount(accountNumber, selectedBankCode);
+
+watch(verification, (newVal) => {
+  if (newVal?.data?.account_name) {
+    console.log("Account verified:", newVal.data.account_name);
+  }
+});
+</script>
+```
+
+**Features**:
+
+- Infinite cache for bank list (doesn't refetch)
+- Automatic account verification when conditions met
+- 24-hour cache for verified accounts
+- Requires `NUXT_PUBLIC_PAYSTACK_SECRET_KEY` in environment variables
+
+---
+
+#### useTeleport (`app/composables/useTeleport.ts`)
+
+Checks if a teleport target element is ready in the DOM.
+
+**Signature**:
+
+```typescript
+useTeleport(targetId: string): { isReady: Ref<boolean> }
+```
+
+**Usage**:
+
+```vue
+<script setup>
+const { isReady } = useTeleport("#app-nav-right");
+</script>
+
+<template>
+  <Teleport to="#app-nav-right" v-if="isReady">
+    <button>Action Button</button>
+  </Teleport>
+</template>
+```
+
+**Features**:
+
+- Polls for target element availability
+- Auto-cleanup on unmount
+- Prevents teleport errors for dynamic targets
+- Useful for navigation slot patterns
+
+---
 
 **Best Practices**:
 
 - Prefix with `use` (e.g., `useAuth`, `useWallet`, `useTransaction`)
 - Keep composables focused on a single responsibility
 - Composables are auto-imported in Nuxt (no need to import manually)
+- Use composables for reactive state and side effects
+- Use utils for pure functions
 
 ---
 
@@ -519,39 +1078,234 @@ Utilities contain pure functions, type definitions, constants, and helper functi
 
 ```
 app/utils/
-├── types/           # TypeScript type definitions
-│   └── icons.ts
-├── helpers.ts       # Pure utility functions
-├── constants.ts     # App-wide constants
-└── validators.ts    # Validation functions
+├── types/              # TypeScript type definitions
+│   ├── icons.ts        # Icon name types
+│   ├── rules.ts        # Validation rule types
+│   └── types.d.ts      # Global type definitions
+├── constants/          # App-wide constants
+│   ├── appData.ts      # Application data
+│   └── mockData.ts     # Mock data for development
+├── log.ts              # Logging utility
+├── validateNumber.ts   # Phone number validation
+├── copy.ts             # Clipboard utility
+├── goBack.ts           # Navigation helper
+├── goTo.ts             # Navigation helper
+├── getFlagEmoji.ts     # Country flag utility
+├── getErrorMessage.ts  # Error message formatter
+└── helpers.ts          # General utility functions
 ```
 
-**Example**:
+#### Core Utilities
+
+**validateNumber** (`app/utils/validateNumber.ts`)
+
+Validates Nigerian phone numbers for specific network providers.
 
 ```typescript
-// app/utils/formatters.ts
-export const formatCurrency = (amount: number, currency: string = "USD") => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency,
-  }).format(amount);
-};
+import validateNumber from "~/utils/validateNumber";
 
-// app/utils/validators.ts
-export const isValidEmail = (email: string): boolean => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const result = validateNumber("08012345678", "mtn");
+
+// Returns:
+// {
+//   isValid: true,
+//   message: 'Valid MTN phone number',
+//   normalizedNumber: '08012345678',
+//   network: 'mtn'
+// }
+```
+
+**Supported Networks**: MTN, Airtel, Glo, 9mobile
+
+**Features**:
+
+- Validates phone number format using `libphonenumber-js`
+- Checks network-specific prefixes
+- Normalizes numbers (handles +234, 234, 0 formats)
+- Returns detailed validation results
+
+---
+
+**copy** (`app/utils/copy.ts`)
+
+Copies text to clipboard with toast feedback.
+
+```typescript
+import copy from "~/utils/copy";
+
+const handleCopy = async () => {
+  const success = await copy("Text to copy");
+  // Shows success/error toast automatically
 };
 ```
+
+**Features**:
+
+- Browser compatibility check
+- Automatic toast notifications
+- Returns boolean success status
+- Async/await support
+
+---
+
+**goBack** (`app/utils/goBack.ts`)
+
+Navigates back in history or to home if no history exists.
+
+```typescript
+import goBack from "~/utils/goBack";
+
+const handleBack = () => {
+  goBack(); // Goes back or to '/' if no history
+};
+```
+
+---
+
+**goTo** (`app/utils/goTo.ts`)
+
+Simple navigation helper.
+
+```typescript
+import goTo from "~/utils/goTo";
+
+goTo("/profile"); // Navigates to profile page
+```
+
+---
+
+**getFlagEmoji** (`app/utils/getFlagEmoji.ts`)
+
+Converts country codes to flag emojis.
+
+```typescript
+import getFlagEmoji from "~/utils/getFlagEmoji";
+
+const flag = getFlagEmoji("NG"); // Returns: 🇳🇬
+```
+
+---
+
+**getErrorMessage** (`app/utils/getErrorMessage.ts`)
+
+Extracts user-friendly error messages from error objects.
+
+```typescript
+import { handleError } from "~/utils/getErrorMessage";
+
+try {
+  // API call
+} catch (error) {
+  const message = handleError(error);
+  useToast("error", message);
+}
+```
+
+---
+
+#### Type Definitions (`app/utils/types/`)
+
+**types.d.ts** - Core application types:
+
+```typescript
+type NetworkProvider = "mtn" | "glo" | "airtel" | "9mobile";
+
+type Modal = {
+  title?: string;
+  subtitle?: string;
+  icon: IconName;
+  primaryActionTitle: string;
+  primaryAction: () => void;
+  secondaryActionTitle?: string;
+  secondaryAction?: () => void;
+  iconColor?: string;
+  primaryActionIcon?: IconName;
+  secondaryActionIcon?: IconName;
+  type?: "success" | "error" | "warning" | "info";
+};
+
+type Bank = {
+  id: number;
+  name: string;
+  code: string;
+  // ... Paystack bank object fields
+};
+
+type Toast = {
+  notification: string;
+  type: "success" | "error" | "warning" | "info";
+  id: string;
+};
+
+type ReceiptType = "transfer" | "electricity" | "data" | "airtime";
+```
+
+**icons.ts** - Icon name types (see Icons section)
+
+**rules.ts** - Validation rule types:
+
+```typescript
+type Rule = {
+  rule: (value: any) => boolean;
+  message: string;
+};
+```
+
+---
+
+### Plugins (`app/plugins/`)
+
+Plugins extend the application with additional functionality and are automatically registered by Nuxt.
+
+#### vue-query.ts
+
+Integrates TanStack Query (formerly React Query) for powerful data fetching and caching.
+
+**Features**:
+
+- Client-side and server-side data hydration
+- 5-second default stale time
+- Automatic background refetching
+- Cache management
+- Query invalidation support
 
 **Usage**:
 
 ```vue
 <script setup>
-import { formatCurrency } from "~/utils/formatters";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/vue-query";
 
-const price = formatCurrency(1234.56, "EUR");
+// Fetch data
+const { data, isLoading, error, refetch } = useQuery({
+  queryKey: ["users"],
+  queryFn: async () => {
+    const response = await fetch("/api/users");
+    return response.json();
+  },
+  staleTime: 60000, // 1 minute
+});
+
+// Mutations
+const queryClient = useQueryClient();
+const mutation = useMutation({
+  mutationFn: async (newUser) => {
+    return await fetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify(newUser),
+    });
+  },
+  onSuccess: () => {
+    // Invalidate and refetch
+    queryClient.invalidateQueries({ queryKey: ["users"] });
+  },
+});
 </script>
 ```
+
+**Already Used In**:
+
+- `useBank` composable for Paystack bank fetching
+- `verifyAccount` composable for account verification
 
 ---
 
@@ -559,22 +1313,30 @@ const price = formatCurrency(1234.56, "EUR");
 
 Nuxt uses **file-based routing** - each Vue file in the `pages/` directory automatically becomes a route.
 
-**Routing Examples**:
+**Actual Application Routes**:
 
 ```
 pages/
-├── index.vue              → /
-├── about.vue              → /about
-├── transactions/
-│   ├── index.vue          → /transactions
-│   └── [id].vue           → /transactions/:id (dynamic route)
-├── wallet/
-│   ├── index.vue          → /wallet
-│   └── deposit.vue        → /wallet/deposit
-└── settings/
-    ├── index.vue          → /settings
-    ├── profile.vue        → /settings/profile
-    └── security.vue       → /settings/security
+├── index.vue                          → /
+├── home.vue                           → /home
+├── settings.vue                       → /settings
+├── profile.vue                        → /profile
+├── transfer.vue                       → /transfer
+├── bills.vue                          → /bills
+├── beneficiaries.vue                  → /beneficiaries
+├── enableNotifications.vue            → /enable-notifications
+├── auth/
+│   ├── signup.vue                     → /auth/signup
+│   └── setup.vue                      → /auth/setup
+├── services/
+│   ├── electricity.vue                → /services/electricity
+│   ├── flight.vue                     → /services/flight
+│   ├── tickets.vue                    → /services/tickets
+│   └── recharge[[type]]/
+│       ├── index.vue                  → /services/recharge (all types)
+│       └── [provider].vue             → /services/recharge/airtime/mtn
+└── receipts/
+    └── [type].vue                     → /receipts/:type (transfer, electricity, data, airtime)
 ```
 
 **Dynamic Routes**:
@@ -665,17 +1427,40 @@ log.info("User data:", user);
 
 Always use the provided reusable components instead of building custom ones:
 
-**For Forms**:
+**For Forms & Input**:
 
+- ✅ Use `<SForm>` as form wrapper for automatic validation tracking
 - ✅ Use `<AppInput>` for text inputs, passwords, numbers
 - ✅ Use `<AppButton>` for all buttons
 - ✅ Use `<OtpInput>` for OTP/PIN entry
+- ✅ Use `<AmountInput>` for monetary amounts
+- ✅ Use `<SelectBank>` for bank account input with verification
+- ✅ Use `<CheckBox>` for checkboxes
+- ✅ Use `<Toggle>` for switches/toggles
+
+**For Selection**:
+
+- ✅ Use `<SelectNetwork>` for network provider selection
+- ✅ Use `<SelectCoin>` for cryptocurrency selection
+- ✅ Use `<SelectWallet>` for wallet selection
+- ✅ Use `<SelectPrepaid>` for prepaid service selection
 
 **For UI Elements**:
 
-- ✅ Use `<Loader>` for loading states
 - ✅ Use `<Icon>` for all icons
 - ✅ Use `<IconBox>` for icons with circular backgrounds
+- ✅ Use `<Loader>` for loading states
+- ✅ Use `<Toast>` for notifications (via `useToast`)
+
+**For Modals & Overlays**:
+
+- ✅ Use `<BottomSlider>` for bottom sheets and modals
+
+**For Navigation**:
+
+- ✅ Use `<TopNav>`, `<BottomNav>`, `<appNav>` for navigation
+- ✅ Use `<BackButton>` for back navigation
+- ✅ Use `<Tab>` for tab navigation
 
 **Benefits**:
 
@@ -683,6 +1468,7 @@ Always use the provided reusable components instead of building custom ones:
 - Built-in dark mode support
 - Type-safe props with TypeScript
 - Accessible and tested
+- Integrated with app theme and design system
 
 ---
 
@@ -713,33 +1499,26 @@ Always use the provided reusable components instead of building custom ones:
 - Always use the `Icon` component instead of inline SVGs
 - Add new icons to the central component for reusability
 
----
-
-## 🧪 Testing (To be added)
-
-Testing setup is not yet configured. Consider adding:
-
-- Vitest for unit tests
-- Playwright or Cypress for E2E tests
-
----
-
 ## 📝 Environment Variables
 
 Create a `.env` file in the root directory for environment-specific configuration:
 
 ```env
-# Example
-NUXT_PUBLIC_API_URL=https://api.example.com
-NUXT_PUBLIC_APP_ENV=development
+# Paystack Integration (required for bank verification)
+NUXT_PUBLIC_PAYSTACK_SECRET_KEY=sk_test_xxxxxxxxxxxxx
 ```
 
 Access in code:
 
 ```typescript
 const config = useRuntimeConfig();
+const paystackKey = config.public.paystackSecretKey;
 const apiUrl = config.public.apiUrl;
 ```
+
+**Required Environment Variables**:
+
+- `NUXT_PUBLIC_PAYSTACK_SECRET_KEY` - Required for `SelectBank` component and `useBank` composable
 
 ---
 
@@ -747,7 +1526,7 @@ const apiUrl = config.public.apiUrl;
 
 ### Adding New Features
 
-1. Create feature branch from `dev`
+1. Create feature branch from `main`
 2. Follow the project structure conventions
 3. Add types for all new functionality
 4. Update this README if adding new patterns
