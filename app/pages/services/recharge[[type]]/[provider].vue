@@ -4,7 +4,8 @@
     <teleport to="#app-nav-right" v-if="isReady">
         <select-network v-model="provider" />
     </teleport>
-    <service-input class="mx-auto w-fit" label="Receiver Phone Number" v-model="receiverPhoneNumber" placeholder="0XX XXXX XXXX" />
+    <service-input :maxlength="11" class="mx-auto w-fit" label="Receiver Phone Number" v-model="receiverPhoneNumber" placeholder="0XX XXXX XXXX" />
+    <p v-if="PhoneValidation.message" class="italic text-error text-xs">{{ PhoneValidation.message }}</p>
     <amount-input class="mt-8" :disabled="!receiverPhoneNumber || !amount" v-model="amount" placeholder="Add Amount" buttonTitle="Pay" orientation="horizontal" />
     <div class="flex items-center justify-between mt-8">
         <p class="text-text-black text-sm">MTN Airtime Bundle</p>
@@ -24,8 +25,9 @@
 
 <script lang="ts" setup>
 import { airtimeBundle, dataBundle } from '~/utils/constants/mockData'
-import type { Modal } from '~/utils/types/types'
-import { rechargeNetworks } from '~/utils/constants/appData'
+import validateNumber from '~/utils/validateNumber'
+import type { NetworkProvider, Modal } from '~/utils/types/types'
+import { NETWORK_PROVIDERS } from '~/utils/constants/appData'
 
 definePageMeta({
   layout: 'navigation',
@@ -34,7 +36,8 @@ definePageMeta({
   validate(route) {
     // validate type and provider
     if(!route.params.type || !route.params.provider) return false
-    return (route.params.type === 'airtime' || route.params.type === 'data') && rechargeNetworks.map(network => network.name.toLowerCase()).includes((route.params.provider as string).toLowerCase())
+    const validTypes = ['airtime', 'data']
+    return validTypes.includes(route.params.type as string) && NETWORK_PROVIDERS.includes(route.params.provider as NetworkProvider)
   }
 })
 const route = useRoute()
@@ -57,6 +60,16 @@ const textMap = {
     sending: `Sending ${type === 'airtime' ? 'Airtime' : 'Data'}.........`,
     success: `${type === 'airtime' ? 'Airtime' : 'Data'} Sent...............`,
 }
+
+const PhoneValidation = computed(() => {
+    if(!receiverPhoneNumber.value){
+        return {
+            isValid: false,
+            message: ''
+        }
+    }
+    return validateNumber(receiverPhoneNumber.value, provider.value.toLowerCase() as NetworkProvider)
+})
 const modal: ComputedRef<Modal | null> = computed(() => {
     if(!modalState.value) return null
     let text = textMap[modalState.value]
