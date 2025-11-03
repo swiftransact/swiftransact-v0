@@ -19,9 +19,7 @@ export default (number: string, network: NetworkProvider) => {
 
   // Validate general number format
   const isValid = isValidNumber(phoneNumber, 'NG');
-  if (!isValid) {
-    return { isValid: false, message: 'Invalid phone number' }
-  }
+  if (!isValid) return { isValid: false, message: 'Invalid phone number' }
 
   // Replace +234 or 234 with 0 for prefix check
   phoneNumber = phoneNumber.replace(/^\+234/, '0').replace(/^234/, '0');
