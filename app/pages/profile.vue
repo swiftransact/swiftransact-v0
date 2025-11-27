@@ -71,9 +71,7 @@
               class="w-10 h-10 rounded-md bg-white/5 flex items-center justify-center"
             >
               <!-- google icon placeholder -->
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                <path d="..." />
-              </svg>
+              <Icon name="google"/>
             </div>
             <div>
               <div class="text-sm font-medium">Email</div>
@@ -86,9 +84,7 @@
               class="w-10 h-10 rounded-md bg-white/5 flex items-center justify-center"
             >
               <!-- phone icon -->
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                <path d="..." />
-              </svg>
+            <Icon name="telephone" color="#0000ff"/>
             </div>
             <div>
               <div class="text-sm font-medium">Phone number</div>
