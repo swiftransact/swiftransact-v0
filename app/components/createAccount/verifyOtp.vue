@@ -48,6 +48,9 @@ const formattedTime = computed(() => {
   const seconds = countdown.value % 60
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 })
+onMounted(() => {
+  startCountdown()
+})
 </script>
 
 <style scoped>
