@@ -2,127 +2,146 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    /* Fonts */
-    /* border radius */
-    --radius-lg: 64px;
-    --font-sans: 'SF Pro Rounded', ui-rounded, 'SF Pro', system-ui, -apple-system, sans-serif;
-    
-    /* Colors */
-    --color-mtn: #F9C62F;
-    --color-glo: #32B721;
-    --color-airtel: #F94646;
-    --color-9mobile: #bece27;
-    --color-grey-bg: #F6F6F6;
-    --color-background: #FFFFFF;
-    --color-black: #000000;
-    --color-secondary-button: #000;
-    --color-primary: #EA4E1B;
-    --color-button-disabled: #FF9A79;
-    --color-background-input: #F6F6F6;
-  
-    --color-background1: #F6F6F6;
-    --color-background2: #E6E6E6;
-    --color-background3: #0C0C0C;
-    --color-background4: #101720;
-    --color-background5: #F0EFE7;
-    --color-surface: #F6F6F6;
-    
-    /* Text Colors */
-    --color-input-text: #616161;
-    --color-subtext: #9CA3AF;
-    --color-text: #1D1D1D;
-    --color-text1: #616161;
-    --color-text2: #A7A7A7;
-    --color-text3: #212121;
-    --color-tertiary-text: #1D1D1D;
-    --color-text-black: #000;
-    
-    
-    /* Border Colors */
-    --color-border: #EEE;
-    --color-border1: #D5D5D5;
-    --color-border3: #E8E8E88C;
-    --color-border4: #F6F6F6;
-    --color-border-subtle: #E5E5E5;
-    --color-divider: #E5E5E5;
-    
-    --color-error: #F00;
-    --color-success: #29941B;
-    --color-success-1: #4CB465;
-    --color-green: #7AB8A6;
-    --color-shade1: #FFCBA4;
-    --color-yellow: #FFCB05;
-    --color-info: #F9CBAF;
-    --color-card-bg: #101720;
-    
-    --background-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.40) 50.5%, rgba(255, 255, 255, 0.40) 100%);
-    --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset, 0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset, 0 -40px 30px -8px rgba(243, 120, 81, 0.50) inset, 0 -80px 60px -30px rgba(234, 78, 27, 0.60) inset;
+  /* Fonts */
+  /* border radius */
+  --radius-lg: 64px;
+  --font-sans: "SF Pro Rounded", ui-rounded, "SF Pro", system-ui, -apple-system,
+    sans-serif;
+
+  /* Colors */
+  --color-mtn: #f9c62f;
+  --color-glo: #32b721;
+  --color-airtel: #f94646;
+  --color-9mobile: #bece27;
+  --color-grey-bg: #f6f6f6;
+  --color-background: #ffffff;
+  --color-black: #000000;
+  --color-secondary-button: #000;
+  --color-primary: #ea4e1b;
+  --color-button-disabled: #ff9a79;
+  --color-background-input: #f6f6f6;
+
+  --color-background1: #f6f6f6;
+  --color-background2: #e6e6e6;
+  --color-background3: #0c0c0c;
+  --color-background4: #101720;
+  --color-background5: #f0efe7;
+  --color-surface: #f6f6f6;
+
+  /* Text Colors */
+  --color-input-text: #616161;
+  --color-subtext: #9ca3af;
+  --color-text: #1d1d1d;
+  --color-text1: #616161;
+  --color-text2: #a7a7a7;
+  --color-text3: #212121;
+  --color-tertiary-text: #1d1d1d;
+  --color-text-black: #000;
+
+  /* Border Colors */
+  --color-border: #eee;
+  --color-border1: #d5d5d5;
+  --color-border3: #e8e8e88c;
+  --color-border4: #f6f6f6;
+  --color-border-subtle: #e5e5e5;
+  --color-divider: #e5e5e5;
+
+  --color-error: #f00;
+  --color-success: #29941b;
+  --color-success-1: #4cb465;
+  --color-green: #7ab8a6;
+  --color-shade1: #ffcba4;
+  --color-yellow: #ffcb05;
+  --color-info: #f9cbaf;
+  --color-card-bg: #101720;
+
+  --background-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 50.5%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset,
+    0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset,
+    0 -40px 30px -8px rgba(243, 120, 81, 0.5) inset,
+    0 -80px 60px -30px rgba(234, 78, 27, 0.6) inset;
 }
 .dark {
-    --color-card-bg: #1C1C1C;
-    --color-grey-bg: #404040;
-    --color-background: #0F0F0F;
-    --color-black: #fff;
-    --color-primary: #EA4E1B;
-    --color-secondary-button: #EA4E1B;
-    --color-button-disabled: #FF9A79;
-    --color-info: #F9CBAF;
-    --color-background-input: #333;
-    --color-tertiary-text: #FFFFFF;
+  --color-card-bg: #1c1c1c;
+  --color-grey-bg: #404040;
+  --color-background: #0f0f0f;
+  --color-black: #fff;
+  --color-primary: #ea4e1b;
+  --color-secondary-button: #ea4e1b;
+  --color-button-disabled: #ff9a79;
+  --color-info: #f9cbaf;
+  --color-background-input: #333;
+  --color-tertiary-text: #ffffff;
 
-    --color-subtext: #9CA3AF;
-  
-    --color-background1: #2A2A2A;
-    --color-background2: #131313;
-    --color-background3: #0C0C0C;
-    --color-background4: #101720;
-    --color-background5: #131313;
-    --color-surface: #131315;
-    
-    /* Text Colors */
-    --color-input-text: #FFF;
-    --color-text-black: #fff;
-    --color-text: #FFF;
-    --color-text1: #E0E0E0;
-    --color-text2: #A7A7A7;
-    --color-text3: #212121;
-    
-    
-    /* Border Colors */
-    --color-border: #EEE;
-    --color-border1: #D5D5D5;
-    --color-border3: #E8E8E88C;
-    --color-border4: #ffffff38;
-    --color-border-subtle: #9CA3AF1F;
-    --color-divider: #E0E0E0;
-    
-    --color-error:  #B3261E;
-    --color-success: #29941B;
-    --color-success-1: #4CB465;
-    --color-green: #7AB8A6;
-    --color-shade1: #FFCBA4;
-    --color-yellow: #FFCB05;
-    
-    --background-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.40) 50.5%, rgba(255, 255, 255, 0.40) 100%);
-    --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset, 0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset, 0 -40px 30px -8px rgba(243, 120, 81, 0.50) inset, 0 -80px 60px -30px rgba(234, 78, 27, 0.60) inset;
+  --color-subtext: #9ca3af;
+
+  --color-background1: #2a2a2a;
+  --color-background2: #131313;
+  --color-background3: #0c0c0c;
+  --color-background4: #101720;
+  --color-background5: #131313;
+  --color-surface: #131315;
+
+  /* Text Colors */
+  --color-input-text: #fff;
+  --color-text-black: #fff;
+  --color-text: #fff;
+  --color-text1: #e0e0e0;
+  --color-text2: #a7a7a7;
+  --color-text3: #212121;
+
+  /* Border Colors */
+  --color-border: #eee;
+  --color-border1: #d5d5d5;
+  --color-border3: #e8e8e88c;
+  --color-border4: #ffffff38;
+  --color-border-subtle: #9ca3af1f;
+  --color-divider: #e0e0e0;
+
+  --color-error: #b3261e;
+  --color-success: #29941b;
+  --color-success-1: #4cb465;
+  --color-green: #7ab8a6;
+  --color-shade1: #ffcba4;
+  --color-yellow: #ffcb05;
+
+  --background-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 50.5%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  --shadow: 0 6px 8px -2px rgba(255, 175, 148, 0.15) inset,
+    0 -20px 20px -6px rgba(255, 255, 255, 0.25) inset,
+    0 -40px 30px -8px rgba(243, 120, 81, 0.5) inset,
+    0 -80px 60px -30px rgba(234, 78, 27, 0.6) inset;
 }
 @layer components {
-    .btn-outlined {
-      @apply px-2.5 flex items-center gap-2 py-1 text-sm font-semibold text-text-black rounded-sm border border-background-input;
-    }
-    .btn-transparent {
-      @apply p-2.5 bg-transparent flex items-center gap-2 text-base font-semibold text-text-black tracking-[-0.4px];
-    }
-    h4{
-      @apply text-text-black text-base font-semibold tracking-[-0.5px];
-    }
-    h3{
-      @apply text-text-black text-2xl font-medium tracking-[-0.5px];
-    }
-    .label{
-      @apply text-subtext text-xs font-normal;
-    }
-    .value{
-      @apply text-text-black text-sm font-normal;
-    }
+  .btn-outlined {
+    @apply px-2.5 flex items-center gap-2 py-1 text-sm font-semibold text-text-black rounded-sm border border-background-input;
   }
+  .btn-transparent {
+    @apply p-2.5 bg-transparent flex items-center gap-2 text-base font-semibold text-text-black tracking-[-0.4px];
+  }
+  h4 {
+    @apply text-text-black text-base font-semibold tracking-[-0.5px];
+  }
+  h3 {
+    @apply text-text-black text-2xl font-medium tracking-[-0.5px];
+  }
+  .label {
+    @apply text-subtext text-xs font-normal;
+  }
+  .value {
+    @apply text-text-black text-sm font-normal;
+  }
+  .card-bg {
+    @apply border-background-input border;
+  }
+  .center-content {
+    @apply flex items-center justify-center;
+  }
+}
