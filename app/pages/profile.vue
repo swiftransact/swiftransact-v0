@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#0b0b0c] text-gray-200 p-4">
+  <div class="min-h-screen bg-[#0b0b0c] text-gray-200 p-2">
     <Toast />
 
     <div class="max-w-xl mx-auto mt-6 space-y-6">
@@ -22,9 +22,9 @@
         Transaction Data
       </h2>
       <div
-        class="bg-[#0f0f10] border border-[#1f1f1f] rounded-md p-4 space-y-3"
+        class="bg-[#0f0f10] border border-[#1f1f1f] rounded-md p-2 space-y-3"
       >
-        <div class="grid grid-cols-4 gap-3">
+        <div class="grid grid-cols-4 gap-2">
           <div
             v-for="(s, idx) in stats"
             :key="idx"
@@ -38,7 +38,7 @@
 
       <!-- manage wallet row -->
       <div
-        class="bg-[#111213] border border-[#1f1f1f] rounded-md px-4 py-3 flex items-center justify-between"
+        class="bg-[#111213] border border-[#1f1f1f] rounded-md px-2 py-3 flex items-center justify-between"
       >
         <div class="text-sm">Manage all wallet</div>
         <div class="flex items-center gap-2">
@@ -47,7 +47,7 @@
             v-for="wallet in walletOptions"
             :key="wallet.name"
             :style="{ backgroundColor: wallet.bg }"
-            class="w-7 h-7 rounded-full flex items-center justify-center"
+            class="w-7 h-7 rounded-full flex items-center justify-center -ml-4 first:ml-0 border border-[#111213]"
           >
             <img
               :src="wallet.icon"
@@ -61,7 +61,7 @@
 
       <!-- personal details-->
       <div
-        class="bg-[#0f0f10] border border-[#1f1f1f] rounded-md p-4 mt-4 space-y-3"
+        class="bg-[#0f0f10] border border-[#1f1f1f] rounded-md p-2 mt-4 space-y-3"
       >
         <h3 class="text-sm font-medium">Personal Details</h3>
 
@@ -118,8 +118,8 @@ const user = {
 const stats = [
   { label: "Transaction", value: "20" },
   { label: "Transfer", value: "$1k" },
-  { label: "D/A Purchased", value: "$321" },
-  { label: "Flight Booked", value: "4" },
+  { label: "Data / Airtime", value: "$321" },
+  { label: "Flights", value: "4" },
 ];
 
 function goBack() {
