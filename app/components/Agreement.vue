@@ -1,5 +1,5 @@
 <template>
-  <p v-if="!encrypted" class="text-text1 text-center text-xs shrink-0">By continuing, you agree to <span class="text-primary">SwiftTransact</span> Terms and privacy policy</p>
+  <p v-if="!encrypted" class="text-text1 text-center text-xs shrink-0">By continuing, you agree to <span class="text-primary">Swiftransact</span> Terms and privacy policy</p>
   <div v-else>
     <icon name='check-mark' :size="16" color="#9CA3AF" />
     <p class="text-xs font-light text-subtext text-center">Encrypted and Secure</p>
