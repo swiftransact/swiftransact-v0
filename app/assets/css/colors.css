@@ -27,6 +27,7 @@
   --color-background4: #101720;
   --color-background5: #f0efe7;
   --color-surface: #f6f6f6;
+  --color-surface-alt: #0e0e0e;
 
   /* Text Colors */
   --color-input-text: #616161;
@@ -85,6 +86,7 @@
   --color-background4: #101720;
   --color-background5: #131313;
   --color-surface: #131315;
+  --color-surface-alt: #f1f1f1;
 
   /* Text Colors */
   --color-input-text: #fff;
@@ -144,4 +146,13 @@
   .center-content {
     @apply flex items-center justify-center;
   }
+}
+.chip {
+  border-radius: 16px;
+  border: 0.74px solid rgba(224, 224, 224, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 12px 12px 20px 0 rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(15px);
+  width: fit-content;
+  padding: 3px 10px;
 }

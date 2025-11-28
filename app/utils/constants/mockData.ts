@@ -70,3 +70,73 @@ export const personalDetails = [
     color: "#0000ff",
   },
 ];
+export const notifications = [
+  {
+    date: new Date().toISOString(), //to always test today
+    notif: [
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+    ],
+  },
+  {
+    date: new Date(new Date().setDate(new Date().getDate() - 1)).toISOString(), //to always test yesterday
+    notif: [
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+    ],
+  },
+  {
+    date: "2025-11-26",
+    notif: [
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+    ],
+  },
+  {
+    date: "2025-01-01",
+    notif: [
+      {
+        title: "USDC TO  NAIRA",
+        rate: "1 usdc ~ N1,500",
+        received: "+N750,000.00",
+        converted: "-500.02 USDC",
+      },
+    ],
+  },
+];
