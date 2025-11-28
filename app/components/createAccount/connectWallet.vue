@@ -83,6 +83,7 @@ const modal: ComputedRef<Modal | null> = computed(() => {
       icon: "check-mark",
       primaryActionTitle: "Done",
       primaryAction: () => {
+        replace("/enableNotifications");
         modalState.value = null;
       },
       secondaryActionTitle: "Connect More Wallet",
