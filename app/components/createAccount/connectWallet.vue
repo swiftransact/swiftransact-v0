@@ -114,6 +114,7 @@ const modal: ComputedRef<Modal | null> = computed(() => {
       icon: "check-mark",
       primaryActionTitle: "Done",
       primaryAction: () => {
+        goTo("/home");
         modalState.value = null;
       },
     };
