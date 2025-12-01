@@ -14,13 +14,13 @@
       placeholder="Enter Amount"
       buttonTitle="Confirm & Pay"
     />
+    <LazyBottomSlider
+      @update:model-value="modalState = null"
+      v-if="modalState"
+      :modal="modal!"
+      v-model="modalState"
+    />
   </div>
-  <LazyBottomSlider
-    @update:model-value="modalState = null"
-    v-if="modalState"
-    :modal="modal!"
-    v-model="modalState"
-  />
 </template>
 
 <script setup lang="ts">

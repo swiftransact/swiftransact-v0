@@ -1,121 +1,161 @@
 <template>
   <Transition name="slide-up">
-    <div @click="emit('update:modelValue', false)" v-if="modelValue" class="overlay h-screen">
+    <div
+      @click="emit('update:modelValue', false)"
+      v-if="modelValue"
+      class="overlay h-screen"
+    >
       <div @click.stop class="slider-content bg-background">
-          <div @click="emit('update:modelValue', false)" class="w-22 h-1 mb-6 bg-background-input rounded-4xl mx-auto mt-5"></div>
-          <!-- header -->
-           <template v-if="title">
-               <div class="px-5 pb-3 flex items-center">
-                  <p class="font-semibold flex-1 text-center text-lg text-tertiary-text">{{ title }}</p>
-                  <Icon color="var(--color-black)" name="close" :size="24" @click="emit('update:modelValue', false)" />
-              </div>
-              <divider color="#3333338C" />
-           </template>
-           <template v-else-if="modal">
-            <div class="flex flex-col items-center px-5 py-5">
-                <icon :name="modal.icon" :size="90" :color="modal.iconColor || 'var(--color-primary)'" />
-                <div class="w-full mb-10 mt-6">
-                    <p v-if="modal.title" class="text-text1 text-lg text-center font-semibold leading-5.5">{{ modal.title }}</p>
-                    <p :style="{ color: textColor[modal.type as keyof typeof textColor] || 'var(--color-text1)' }" v-if="modal.subtitle" class="text-text1 text-center text-sm">{{ modal.subtitle }}</p>
-                </div>
-                <div class="flex gap-2 w-full">
-                    <app-button class="flex-1" v-if="modal.secondaryActionTitle" :title="modal.secondaryActionTitle" variant="info" :prepend-icon="modal.secondaryActionIcon" @click="modal.secondaryAction" />
-                    <app-button class="flex-1" :title="modal.primaryActionTitle" variant="primary" :prepend-icon="modal.primaryActionIcon" @click="modal.primaryAction" />
-                </div>
+        <div
+          @click="emit('update:modelValue', false)"
+          class="w-22 h-1 mb-6 bg-background-input rounded-4xl mx-auto mt-5"
+        ></div>
+        <!-- header -->
+        <template v-if="title">
+          <div class="px-5 pb-3 flex items-center">
+            <p
+              class="font-semibold flex-1 text-center text-lg text-tertiary-text"
+            >
+              {{ title }}
+            </p>
+            <Icon
+              color="var(--color-black)"
+              name="close"
+              :size="24"
+              @click="emit('update:modelValue', false)"
+            />
+          </div>
+          <divider color="#3333338C" />
+        </template>
+        <template v-else-if="modal">
+          <div class="flex flex-col items-center px-5 py-5">
+            <icon
+              :name="modal.icon"
+              :size="90"
+              :color="modal.iconColor || 'var(--color-primary)'"
+            />
+            <div class="w-full mb-10 mt-6">
+              <p
+                v-if="modal.title"
+                class="text-text1 text-lg text-center font-semibold leading-5.5"
+              >
+                {{ modal.title }}
+              </p>
+              <p
+                :style="{ color: textColor[modal.type as keyof typeof textColor] || 'var(--color-text1)' }"
+                v-if="modal.subtitle"
+                class="text-text1 text-center text-sm"
+              >
+                {{ modal.subtitle }}
+              </p>
             </div>
-           </template>
-           <div>
-              <slot />
-           </div>
-           <safe-area position="bottom" />
+            <div class="flex gap-2 w-full">
+              <app-button
+                class="flex-1"
+                v-if="modal.secondaryActionTitle"
+                :title="modal.secondaryActionTitle"
+                variant="info"
+                :prepend-icon="modal.secondaryActionIcon"
+                @click="modal.secondaryAction"
+              />
+              <app-button
+                class="flex-1"
+                :title="modal.primaryActionTitle"
+                variant="primary"
+                :prepend-icon="modal.primaryActionIcon"
+                @click="modal.primaryAction"
+              />
+            </div>
+          </div>
+        </template>
+        <div>
+          <slot />
+        </div>
+        <safe-area position="bottom" />
       </div>
     </div>
   </Transition>
 </template>
 
 <script setup lang="ts">
-import { useScrollLock } from '@vueuse/core';
-import type { Modal } from '~/utils/types/types';
+import { useScrollLock } from "@vueuse/core";
+import type { Modal } from "~/utils/types/types";
 
 type BaseProps = {
-    modelValue: boolean | string | any;
-}
+  modelValue: boolean | string | any;
+};
 
 // Discriminated union: either title (with slot) OR modal, but not both
-type SliderProps = BaseProps & (
-    | { title: string; modal?: never }
-    | { modal: Modal; title?: never }
-)
+type SliderProps = BaseProps &
+  ({ title: string; modal?: never } | { modal: Modal; title?: never });
 
-const emit = defineEmits(['update:modelValue'])
-const props = defineProps<SliderProps>()
+const emit = defineEmits(["update:modelValue"]);
+const props = defineProps<SliderProps>();
 
-const slots = useSlots()
+const slots = useSlots();
 if (import.meta.dev && props.title && !slots.default) {
-    log.warn('BottomSlider: title prop requires slot content to be provided')
+  log.warn("BottomSlider: title prop requires slot content to be provided");
 }
 
 // Lock scroll when modal is open
-const isLocked = useScrollLock(document?.body)
-watch(() => props.modelValue, (value) => {
-    isLocked.value = value as boolean
-}, { immediate: true })
+const isLocked = useScrollLock(document?.body);
+watch(
+  () => props.modelValue,
+  (value) => {
+    isLocked.value = value as boolean;
+  },
+  { immediate: true }
+);
 const textColor = {
-    success: 'var(--color-success)',
-    error: 'var(--color-error)',
-    warning: 'var(--color-warning)',
-    info: 'var(--color-text1)',
-}
+  success: "var(--color-success)",
+  error: "var(--color-error)",
+  warning: "var(--color-warning)",
+  info: "var(--color-text1)",
+};
 </script>
 
 <style scoped>
-.overlay{
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 430px;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 100;
+.overlay {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
 }
-.slider-content{
-    border-radius: 25px 25px 0 0;
-    max-height: 90vh;
-    /* min-height: 50vh; */
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding-bottom: 10px;
+.slider-content {
+  border-radius: 25px 25px 0 0;
+  max-height: 90vh;
+  /* min-height: 50vh; */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 /* Transition animations */
 .slide-up-enter-active,
 .slide-up-leave-active {
-    transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .slide-up-enter-active .slider-content,
 .slide-up-leave-active .slider-content {
-    transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
 }
 
 /* Overlay fade */
 .slide-up-enter-from,
 .slide-up-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 /* Slider slide up/down */
 .slide-up-enter-from .slider-content,
 .slide-up-leave-to .slider-content {
-    transform: translateY(100%);
-}
-
-@media (max-width: 767px) {
-    .overlay {
-        max-width: 100%;
-    }
+  transform: translateY(100%);
 }
 </style>
