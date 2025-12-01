@@ -26,7 +26,7 @@ import PhoneNumber from "~/components/createAccount/PhoneNumber.vue";
 import verifyOtp from "~/components/createAccount/verifyOtp.vue";
 import connectWallet from "~/components/createAccount/connectWallet.vue";
 
-const step = ref(3);
+const step = ref(1);
 const renderComponent = () => {
   switch (step.value) {
     case 1:
