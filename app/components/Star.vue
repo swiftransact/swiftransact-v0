@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
 const props = defineProps({
   size: {
     type: Number,
@@ -14,7 +12,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: '#EA4E1B',
+    default: "#EA4E1B",
   },
   left: {
     type: String,
@@ -32,21 +30,21 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
-})
+});
 
 const positionStyles = computed(() => {
-  const styles: Record<string, string> = {}
-  
-  if (props.left) styles.left = props.left
-  if (props.right) styles.right = props.right
-  if (props.top) styles.top = props.top
-  if (props.bottom) styles.bottom = props.bottom
-  
-  return styles
-})
+  const styles: Record<string, string> = {};
+
+  if (props.left) styles.left = props.left;
+  if (props.right) styles.right = props.right;
+  if (props.top) styles.top = props.top;
+  if (props.bottom) styles.bottom = props.bottom;
+
+  return styles;
+});
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .star-wrapper {
   pointer-events: none;
 }

@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
     "vue3-carousel-nuxt",
-    "vue3-carousel-nuxt",
   ],
   app: {
     head: {
